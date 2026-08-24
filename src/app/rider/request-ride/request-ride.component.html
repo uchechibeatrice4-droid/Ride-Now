@@ -1,0 +1,43 @@
+<div class="request-ride">
+
+  <h1>Request a Ride 🚗</h1>
+  <p>Enter your pickup location and destination.</p>
+
+  <form [formGroup]="rideForm" (ngSubmit)="requestRide()">
+
+    <div class="form-group">
+      <label>Pickup Location</label>
+
+      <input
+        type="text"
+        formControlName="pickup"
+        placeholder="Where should we pick you up?"
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Destination</label>
+
+      <input
+        type="text"
+        formControlName="destination"
+        placeholder="Where are you going?"
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Ride Type</label>
+
+      <select formControlName="rideType">
+        <option value="Standard">Standard</option>
+        <option value="Premium">Premium</option>
+      </select>
+    </div>
+
+    <button type="submit">
+      Request Ride
+    </button>
+
+  </form>
+
+</div>

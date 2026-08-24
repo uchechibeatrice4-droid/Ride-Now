@@ -1,0 +1,36 @@
+<div class="ride-history">
+
+  <h1>My Ride History 📋</h1>
+  <p>View your previous and current ride requests.</p>
+
+  <div *ngIf="rides.length === 0" class="empty-state">
+    <p>You don't have any ride requests yet.</p>
+  </div>
+
+  <div *ngIf="rides.length > 0" class="rides-list">
+
+    <div class="ride-card" *ngFor="let ride of rides">
+
+      <div class="ride-header">
+        <h3>{{ ride.pickup }} → {{ ride.destination }}</h3>
+
+        <span class="status">
+          {{ ride.status }}
+        </span>
+      </div>
+
+      <p>
+        <strong>Ride Type:</strong>
+        {{ ride.rideType }}
+      </p>
+
+      <p>
+        <strong>Requested:</strong>
+        {{ ride.createdAt?.toDate() | date:'medium' }}
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,45 @@
+<div class="rider-dashboard">
+
+  <header class="dashboard-header">
+    <div>
+      <h1>RideNow</h1>
+      <p>Welcome back, Rider 👋</p>
+    </div>
+
+    <button class="logout-btn" (click)="logout()">
+      Logout
+    </button>
+  </header>
+
+  <section class="welcome-section">
+    <h2>Where do you want to go?</h2>
+    <p>Request a ride and get to your destination safely.</p>
+
+    <button class="request-btn" (click)="goToRequestRide()">
+      Request a Ride 🚗
+    </button>
+  </section>
+
+  <section class="dashboard-cards">
+
+    <div class="dashboard-card">
+      <h3>📍 Request a Ride</h3>
+      <p>Enter your pickup and destination to request a ride.</p>
+      <button routerLink="/request-ride">Request Ride</button>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>📋 Ride History</h3>
+      <p>View your previous rides and trip details.</p>
+      <button routerLink="/ride-history">View History</button>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>👤 My Profile</h3>
+      <p>View and update your personal information.</p>
+      <button routerLink="/my-profile">View Profile</button>
+    </div>
+
+  </section>
+
+</div>
