@@ -1,0 +1,59 @@
+<div class="profile-page">
+
+  <header class="profile-header">
+    <button routerLink="/rider-dashboard" class="back-btn">
+      ← Back
+    </button>
+
+    <h1>My Profile</h1>
+  </header>
+
+  <main class="profile-container" *ngIf="profile">
+
+    <section class="profile-card">
+
+      <div class="profile-avatar">
+        👤
+      </div>
+
+      <h2>{{ profile.fullName }}</h2>
+      <p class="role">{{ profile.role | titlecase }}</p>
+
+      <div class="profile-details">
+
+        <div class="detail">
+          <span>Full Name</span>
+          <strong>{{ profile.fullName }}</strong>
+        </div>
+
+        <div class="detail">
+          <span>Email</span>
+          <strong>{{ profile.email }}</strong>
+        </div>
+
+        <div class="detail">
+          <span>Account Type</span>
+          <strong>{{ profile.role | titlecase }}</strong>
+        </div>
+
+        <div class="detail">
+          <span>Account Status</span>
+          <strong
+            [class.active]="profile.isActive"
+            [class.inactive]="!profile.isActive"
+          >
+            {{ profile.isActive ? 'Active' : 'Inactive' }}
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <div class="loading" *ngIf="!profile">
+    Loading profile...
+  </div>
+
+</div>

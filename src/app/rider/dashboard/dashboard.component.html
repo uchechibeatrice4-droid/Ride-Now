@@ -25,19 +25,19 @@
     <div class="dashboard-card">
       <h3>📍 Request a Ride</h3>
       <p>Enter your pickup and destination to request a ride.</p>
-      <button routerLink="/request-ride">Request Ride</button>
+      <button (click)="goToRequestRide()">Request Ride</button>
     </div>
 
     <div class="dashboard-card">
       <h3>📋 Ride History</h3>
       <p>View your previous rides and trip details.</p>
-      <button routerLink="/ride-history">View History</button>
+      <button (click)="goToRideHistory()">View History</button>
     </div>
 
     <div class="dashboard-card">
       <h3>👤 My Profile</h3>
       <p>View and update your personal information.</p>
-      <button routerLink="/my-profile">View Profile</button>
+      <button (click)="goToMyProfile()">View Profile</button>
     </div>
 
   </section>

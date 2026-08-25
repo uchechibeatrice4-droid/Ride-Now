@@ -20,7 +20,7 @@ export class RequestRideComponent {
     private fb: FormBuilder,
     private firestore: AngularFirestore,
     private fireAuth: AngularFireAuth
-  ) {}
+  ) { }
 
   requestRide() {
     if (this.rideForm.invalid) {
@@ -40,6 +40,8 @@ export class RequestRideComponent {
         destination: this.rideForm.value.destination,
         rideType: this.rideForm.value.rideType,
         status: 'requested',
+        fare: this.rideForm.value.rideType === 'Premium' ? 3000 : 2000,
+        paymentStatus: 'unpaid',
         createdAt: new Date()
       };
 

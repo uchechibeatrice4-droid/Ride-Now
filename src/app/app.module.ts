@@ -14,6 +14,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { DashboardComponent } from './rider/dashboard/dashboard.component';
 import { RequestRideComponent } from './rider/request-ride/request-ride.component';
 import { RideHistoryComponent } from './rider/ride-history/ride-history.component';
+import { ProfileComponent } from './rider/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { RideHistoryComponent } from './rider/ride-history/ride-history.componen
     DashboardComponent,
     RequestRideComponent,
     RideHistoryComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

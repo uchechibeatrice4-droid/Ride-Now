@@ -1,22 +1,124 @@
 <div class="ride-history">
 
-  <h1>My Ride History 📋</h1>
-  <p>View your previous and current ride requests.</p>
+  <h1>My Rides 📋</h1>
+  <p>Track your current ride and view your previous trips.</p>
 
-  <div *ngIf="rides.length === 0" class="empty-state">
-    <p>You don't have any ride requests yet.</p>
-  </div>
+  <!-- CURRENT RIDE -->
+  <section class="active-ride" *ngIf="activeRide">
 
-  <div *ngIf="rides.length > 0" class="rides-list">
+    <div class="active-header">
+      <div>
+        <span class="active-label">CURRENT RIDE</span>
+        <h2>{{ activeRide.pickup }} → {{ activeRide.destination }}</h2>
+      </div>
+
+      <span class="status-badge">
+        {{ activeRide.status }}
+      </span>
+    </div>
+
+    <!-- Ride progress -->
+    <div class="ride-progress">
+
+      <div class="progress-step" [class.completed]="
+          activeRide.status === 'accepted' ||
+          activeRide.status === 'arriving' ||
+          activeRide.status === 'in_progress'
+        " [class.current]="activeRide.status === 'requested'">
+        <span>1</span>
+        <p>Requested</p>
+      </div>
+
+      <div class="progress-line" [class.completed-line]="
+          activeRide.status === 'accepted' ||
+          activeRide.status === 'arriving' ||
+          activeRide.status === 'in_progress'
+        "></div>
+
+      <div class="progress-step" [class.completed]="
+          activeRide.status === 'arriving' ||
+          activeRide.status === 'in_progress'
+        " [class.current]="activeRide.status === 'accepted'">
+        <span>2</span>
+        <p>Accepted</p>
+      </div>
+
+      <div class="progress-line" [class.completed-line]="
+          activeRide.status === 'arriving' ||
+          activeRide.status === 'in_progress'
+        "></div>
+
+      <div class="progress-step" [class.completed]="activeRide.status === 'in_progress'"
+        [class.current]="activeRide.status === 'arriving'">
+        <span>3</span>
+        <p>Arriving</p>
+      </div>
+
+      <div class="progress-line" [class.completed-line]="
+          activeRide.status === 'in_progress'
+        "></div>
+
+      <div class="progress-step" [class.current]="activeRide.status === 'in_progress'">
+        <span>4</span>
+        <p>In Ride</p>
+      </div>
+
+    </div>
+
+    <div class="ride-info">
+
+      <div>
+        <span>Pickup</span>
+        <strong>{{ activeRide.pickup }}</strong>
+      </div>
+
+      <div>
+        <span>Destination</span>
+        <strong>{{ activeRide.destination }}</strong>
+      </div>
+
+      <div>
+        <span>Ride Type</span>
+        <strong>{{ activeRide.rideType }}</strong>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- NO CURRENT RIDE -->
+  <section class="no-active-ride" *ngIf="!activeRide">
+    <div>🚗</div>
+    <h2>No active ride</h2>
+    <p>You don't have a ride in progress right now.</p>
+
+    <button routerLink="/request-ride">
+      Request a Ride
+    </button>
+  </section>
+
+
+  <!-- RIDE HISTORY -->
+  <section class="history-section">
+
+    <h2>All My Rides</h2>
 
     <div class="ride-card" *ngFor="let ride of rides">
 
-      <div class="ride-header">
-        <h3>{{ ride.pickup }} → {{ ride.destination }}</h3>
+      <div class="ride-card-header">
 
-        <span class="status">
+        <h3>
+          {{ ride.pickup }} → {{ ride.destination }}
+        </h3>
+
+        <span class="history-status" [class.active-status]="
+          ride.status !== 'completed' &&
+          ride.status !== 'cancelled'
+        ">
           {{ ride.status }}
         </span>
+
       </div>
 
       <p>
@@ -25,12 +127,41 @@
       </p>
 
       <p>
+        <strong>Fare:</strong>
+        ₦{{ ride.fare || 0 }}
+      </p>
+
+      <p>
+        <strong>Payment:</strong>
+        <span [class.paid]="ride.paymentStatus === 'paid'" [class.unpaid]="ride.paymentStatus !== 'paid'">
+          {{ ride.paymentStatus || 'unpaid' }}
+        </span>
+      </p>
+
+      <div class="payment-action" *ngIf="
+    ride.status === 'completed' &&
+    ride.paymentStatus !== 'paid'
+  ">
+        <button class="pay-btn" (click)="payForRide(ride)">
+          Pay ₦{{ ride.fare }}
+        </button>
+      </div>
+
+      <div class="paid-message" *ngIf="ride.paymentStatus === 'paid'">
+        ✅ Paid
+      </div>
+
+      <p>
         <strong>Requested:</strong>
         {{ ride.createdAt?.toDate() | date:'medium' }}
       </p>
 
     </div>
 
-  </div>
+    <p *ngIf="rides.length === 0" class="no-rides">
+      You haven't requested any rides yet.
+    </p>
+
+  </section>
 
 </div>

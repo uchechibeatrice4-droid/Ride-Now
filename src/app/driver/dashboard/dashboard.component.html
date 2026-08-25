@@ -1,2 +1,100 @@
-<p>dashboard works!</p>
-<h1>Welcome Driver</h1>
+<div class="driver-dashboard">
+
+  <header class="dashboard-header">
+
+    <div>
+      <h1>RideNow 🚘</h1>
+      <p>Driver Dashboard</p>
+    </div>
+
+  </header>
+
+  <main class="dashboard-content">
+
+    <div class="welcome-section">
+      <h2>Available Ride Requests</h2>
+      <p>Accept a ride request to start helping riders.</p>
+    </div>
+
+    <!-- No ride requests -->
+    <div class="empty-state" *ngIf="rides.length === 0">
+
+      <div class="empty-icon">🚗</div>
+
+      <h3>No ride requests</h3>
+
+      <p>
+        There are currently no available ride requests.
+      </p>
+
+    </div>
+
+
+    <!-- Available rides -->
+    <div class="ride-list" *ngIf="rides.length > 0">
+
+      <div
+        class="ride-card"
+        *ngFor="let ride of rides"
+      >
+
+        <div class="ride-card-header">
+
+          <div>
+            <span class="ride-label">
+              NEW RIDE REQUEST
+            </span>
+
+            <h3>
+              {{ ride.pickup }}
+              →
+              {{ ride.destination }}
+            </h3>
+          </div>
+
+          <span class="ride-status">
+            {{ ride.status }}
+          </span>
+
+        </div>
+
+
+        <div class="ride-details">
+
+          <div>
+            <span>Pickup</span>
+            <strong>{{ ride.pickup }}</strong>
+          </div>
+
+          <div>
+            <span>Destination</span>
+            <strong>{{ ride.destination }}</strong>
+          </div>
+
+          <div>
+            <span>Ride Type</span>
+            <strong>{{ ride.rideType }}</strong>
+          </div>
+
+          <div>
+            <span>Fare</span>
+            <strong>₦{{ ride.fare }}</strong>
+          </div>
+
+        </div>
+
+
+        <button
+          class="accept-btn"
+          (click)="acceptRide(ride)"
+        >
+          Accept Ride 🚗
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

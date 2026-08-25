@@ -8,12 +8,16 @@ import { DashboardComponent as AdminDashboardComponent } from './admin/dashboard
 import { AuthGuard } from './core/auth.guard';
 import { RoleGuard } from './core/role.guard';
 import { RequestRideComponent } from './rider/request-ride/request-ride.component';
+import { RideHistoryComponent } from './rider/ride-history/ride-history.component';
+import { ProfileComponent } from './rider/profile/profile.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'rider-dashboard', component: RiderDashboardComponent, canActivate: [RoleGuard], data: { role: 'rider' } },
+  { path: 'profile', component: ProfileComponent, canActivate: [RoleGuard], data: { role: 'rider' } },
   { path: 'request-ride', component: RequestRideComponent, canActivate: [RoleGuard], data: { role: 'rider' } },
+  { path: 'ride-history', component: RideHistoryComponent, canActivate: [RoleGuard], data: { role: 'rider' } },
   { path: 'driver-dashboard', component: DriverDashboardComponent, canActivate: [RoleGuard], data: { role: 'driver' } },
   { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [RoleGuard], data: { role: 'admin' } },
 ];

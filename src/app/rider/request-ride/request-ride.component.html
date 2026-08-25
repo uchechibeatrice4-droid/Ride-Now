@@ -1,43 +1,138 @@
-<div class="request-ride">
+<div class="request-page">
 
-  <h1>Request a Ride 🚗</h1>
-  <p>Enter your pickup location and destination.</p>
-
-  <form [formGroup]="rideForm" (ngSubmit)="requestRide()">
-
-    <div class="form-group">
-      <label>Pickup Location</label>
-
-      <input
-        type="text"
-        formControlName="pickup"
-        placeholder="Where should we pick you up?"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>Destination</label>
-
-      <input
-        type="text"
-        formControlName="destination"
-        placeholder="Where are you going?"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>Ride Type</label>
-
-      <select formControlName="rideType">
-        <option value="Standard">Standard</option>
-        <option value="Premium">Premium</option>
-      </select>
-    </div>
-
-    <button type="submit">
-      Request Ride
+  <!-- Header -->
+  <header class="request-header">
+    <button class="back-btn" routerLink="/rider-dashboard">
+      ← Back
     </button>
 
-  </form>
+    <h1>RideNow</h1>
+
+    <span class="header-title">Request a Ride</span>
+  </header>
+
+  <!-- Main Content -->
+  <main class="request-container">
+
+    <div class="request-intro">
+      <span class="location-icon">📍</span>
+
+      <div>
+        <h2>Where are you going?</h2>
+        <p>Enter your pickup location and destination.</p>
+      </div>
+    </div>
+
+    <form [formGroup]="rideForm" (ngSubmit)="requestRide()">
+
+      <!-- Locations -->
+      <section class="location-section">
+
+        <div class="location-input">
+          <div class="icon pickup-icon">●</div>
+
+          <div class="input-content">
+            <label>Pickup Location</label>
+
+            <input
+              type="text"
+              formControlName="pickup"
+              placeholder="Where should we pick you up?"
+            >
+          </div>
+        </div>
+
+        <div class="location-line"></div>
+
+        <div class="location-input">
+          <div class="icon destination-icon">●</div>
+
+          <div class="input-content">
+            <label>Destination</label>
+
+            <input
+              type="text"
+              formControlName="destination"
+              placeholder="Where are you going?"
+            >
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Ride Type -->
+      <section class="ride-type-section">
+
+        <h3>Choose your ride</h3>
+
+        <div class="ride-options">
+
+          <label class="ride-option">
+            <input
+              type="radio"
+              formControlName="rideType"
+              value="Standard"
+            >
+
+            <div class="ride-option-content">
+              <div class="ride-icon">🚗</div>
+
+              <div>
+                <strong>Standard</strong>
+                <p>Affordable everyday ride</p>
+              </div>
+            </div>
+
+          </label>
+
+          <label class="ride-option">
+            <input
+              type="radio"
+              formControlName="rideType"
+              value="Premium"
+            >
+
+            <div class="ride-option-content">
+              <div class="ride-icon">🚘</div>
+
+              <div>
+                <strong>Premium</strong>
+                <p>More comfort, more space</p>
+              </div>
+            </div>
+
+          </label>
+
+        </div>
+
+      </section>
+
+      <!-- Summary -->
+      <section class="ride-summary">
+
+        <div>
+          <span>Ride type</span>
+          <strong>{{ rideForm.value.rideType }}</strong>
+        </div>
+
+        <div>
+          <span>Payment</span>
+          <strong>Cash</strong>
+        </div>
+
+      </section>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="request-btn"
+        [disabled]="rideForm.invalid"
+      >
+        Request Ride 🚗
+      </button>
+
+    </form>
+
+  </main>
 
 </div>

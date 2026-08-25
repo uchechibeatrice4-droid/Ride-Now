@@ -21,4 +21,12 @@ export class DashboardComponent {
   goToRequestRide() {
     this.router.navigate(['/request-ride']);
   }
+
+  goToRideHistory() {
+    this.router.navigate(['/ride-history']);
+  }
+
+  goToMyProfile() {
+    this.router.navigate(['/profile']);
+  }
 }
