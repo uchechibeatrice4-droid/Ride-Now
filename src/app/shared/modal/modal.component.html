@@ -1,0 +1,46 @@
+<div class="modal-overlay" *ngIf="show">
+
+  <div class="modal-box">
+
+    <div class="modal-icon" [ngClass]="type">
+
+      <span *ngIf="type === 'success'">✓</span>
+
+      <span *ngIf="type === 'error'">✕</span>
+
+      <span *ngIf="type === 'confirm'">?</span>
+
+    </div>
+
+    <h2>{{ title }}</h2>
+
+    <p>{{ message }}</p>
+
+    <div class="modal-actions">
+
+      <button
+        *ngIf="type === 'confirm'"
+        class="cancel-btn"
+        (click)="closeModal()">
+        No
+      </button>
+
+      <button
+        *ngIf="type === 'confirm'"
+        class="confirm-btn"
+        (click)="confirmAction()">
+        Yes
+      </button>
+
+      <button
+        *ngIf="type !== 'confirm'"
+        class="ok-btn"
+        (click)="closeModal()">
+        OK
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

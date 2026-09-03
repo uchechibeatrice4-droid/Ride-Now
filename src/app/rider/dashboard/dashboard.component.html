@@ -1,45 +1,116 @@
 <div class="rider-dashboard">
 
-  <header class="dashboard-header">
-    <div>
-      <h1>RideNow</h1>
-      <p>Welcome back, Rider 👋</p>
+  <!-- Navigation -->
+  <nav class="dashboard-nav">
+
+    <div class="nav-logo">
+      <h2>RideNow 🚗</h2>
     </div>
 
-    <button class="logout-btn" (click)="logout()">
-      Logout
-    </button>
-  </header>
+    <div class="nav-links">
 
-  <section class="welcome-section">
-    <h2>Where do you want to go?</h2>
-    <p>Request a ride and get to your destination safely.</p>
+      <button (click)="goToRequestRide()">
+        🚗 Request Ride
+      </button>
 
-    <button class="request-btn" (click)="goToRequestRide()">
-      Request a Ride 🚗
-    </button>
-  </section>
+      <button (click)="goToRideHistory()">
+        📋 My Rides
+      </button>
 
-  <section class="dashboard-cards">
+      <button (click)="goToMyProfile()">
+        👤 My Profile
+      </button>
 
-    <div class="dashboard-card">
-      <h3>📍 Request a Ride</h3>
-      <p>Enter your pickup and destination to request a ride.</p>
-      <button (click)="goToRequestRide()">Request Ride</button>
+      <button class="logout-btn" (click)="logout()">
+        🚪 Logout
+      </button>
+
     </div>
 
-    <div class="dashboard-card">
-      <h3>📋 Ride History</h3>
-      <p>View your previous rides and trip details.</p>
-      <button (click)="goToRideHistory()">View History</button>
-    </div>
+  </nav>
 
-    <div class="dashboard-card">
-      <h3>👤 My Profile</h3>
-      <p>View and update your personal information.</p>
-      <button (click)="goToMyProfile()">View Profile</button>
-    </div>
 
-  </section>
+  <!-- Dashboard Content -->
+  <main class="dashboard-content">
+
+    <header class="dashboard-header">
+
+      <div>
+        <h1>Welcome back, Rider 👋</h1>
+        <p>Where would you like to go today?</p>
+      </div>
+
+    </header>
+
+
+    <!-- Main Request Ride -->
+    <section class="welcome-section">
+
+      <h2>Ready to go somewhere?</h2>
+
+      <p>
+        Request a ride and get to your destination safely and comfortably.
+      </p>
+
+      <button
+        class="request-btn"
+        (click)="goToRequestRide()"
+      >
+        Request a Ride 🚗
+      </button>
+
+    </section>
+
+
+    <!-- Dashboard Cards -->
+    <section class="dashboard-cards">
+
+      <div class="dashboard-card">
+
+        <h3>📍 Request a Ride</h3>
+
+        <p>
+          Enter your pickup location and destination to request a ride.
+        </p>
+
+        <button (click)="goToRequestRide()">
+          Request Ride
+        </button>
+
+      </div>
+
+
+      <div class="dashboard-card">
+
+        <h3>📋 My Rides</h3>
+
+        <p>
+          Track your current ride and view your previous trips.
+        </p>
+
+        <button (click)="goToRideHistory()">
+          View My Rides
+        </button>
+
+      </div>
+
+
+      <div class="dashboard-card">
+
+        <h3>👤 My Profile</h3>
+
+        <p>
+          View your account information and profile details.
+        </p>
+
+        <button (click)="goToMyProfile()">
+          View Profile
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
 
 </div>

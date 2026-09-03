@@ -1,2 +1,245 @@
-<p>dashboard works!</p>
-<h1>Welcome Admin</h1>
+<div class="admin-dashboard">
+
+    <header class="admin-header">
+
+        <div>
+            <h1>RideNow 👑</h1>
+            <p>Admin Dashboard</p>
+        </div>
+
+    </header>
+
+
+    <main class="admin-content">
+
+        <section class="welcome-section">
+
+            <h2>Welcome, Admin 👋</h2>
+
+            <p>
+                Here's an overview of what's happening on RideNow.
+            </p>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">👥</div>
+
+                <div>
+                    <span>Total Users</span>
+                    <h2>{{ totalUsers }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🚗</div>
+
+                <div>
+                    <span>Total Rides</span>
+                    <h2>{{ totalRides }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🏁</div>
+
+                <div>
+                    <span>Completed Rides</span>
+                    <h2>{{ completedRides }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">❌</div>
+
+                <div>
+                    <span>Cancelled Rides</span>
+                    <h2>{{ cancelledRides }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">💰</div>
+
+                <div>
+                    <span>Total Revenue</span>
+                    <h2>₦{{ totalRevenue }}</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECENT RIDES -->
+
+        <section class="recent-rides">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Recent Rides 📋</h2>
+                    <p>Latest ride activity on RideNow.</p>
+                </div>
+
+            </div>
+
+
+            <div class="ride-row" *ngFor="let ride of recentRides">
+
+                <div class="ride-route">
+
+                    <strong>
+                        {{ ride.pickup }} → {{ ride.destination }}
+                    </strong>
+
+                    <span>
+                        {{ ride.rideType }}
+                    </span>
+
+                </div>
+
+
+                <div class="ride-fare">
+
+                    <strong>
+                        ₦{{ ride.fare || 0 }}
+                    </strong>
+
+                    <span>
+                        {{ ride.paymentStatus || 'unpaid' }}
+                    </span>
+
+                </div>
+
+
+                <div class="ride-status">
+
+                    {{ ride.status }}
+
+                </div>
+
+            </div>
+
+
+            <div class="empty-state" *ngIf="recentRides.length === 0">
+
+                <div>📋</div>
+
+                <h3>No rides yet</h3>
+
+                <p>
+                    Ride activity will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- USER MANAGEMENT -->
+
+        <section class="user-management">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Manage Users 👥</h2>
+                    <p>View and manage RideNow users.</p>
+                </div>
+
+            </div>
+
+            <div class="search-box">
+
+                <input type="text" [(ngModel)]="searchText" placeholder="Search by name, email or role...">
+
+            </div>
+
+
+            <div class="users-list">
+
+                <div class="user-row" *ngFor="let user of filteredUsers">
+
+                    <div class="user-info">
+
+                        <div class="user-avatar">
+                            👤
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                {{ user.fullName || 'Unnamed User' }}
+                            </strong>
+
+                            <span>
+                                {{ user.email }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-role">
+
+                        {{ user.role | titlecase }}
+
+                    </div>
+
+
+                    <div>
+
+                        <span [class.active]="user.isActive" [class.inactive]="!user.isActive">
+                            {{ user.isActive ? 'Active' : 'Inactive' }}
+                        </span>
+
+                    </div>
+
+
+                    <button *ngIf="user.role !== 'admin'" (click)="toggleUserStatus(user)">
+
+                        {{ user.isActive ? 'Deactivate' : 'Activate' }}
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="empty-state" *ngIf="filteredUsers.length === 0">
+
+                <div>👥</div>
+
+                <h3>No users found</h3>
+
+                <p>
+                    No users match your search.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>

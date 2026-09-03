@@ -1,11 +1,62 @@
-<div class="register-container">
+<div class="auth-page">  <div class="auth-card"><!-- Left Side -->
+<div class="auth-info">
 
-  <h2>Create Your RideNow Account</h2>
+  <div class="logo">
+    🚘 <span>RideNow</span>
+  </div>
+
+  <h1>Your ride.<br>Whenever you need it.</h1>
+
+  <p>
+    Create your RideNow account and enjoy fast, reliable
+    and convenient rides wherever you go.
+  </p>
+
+  <div class="feature">
+    <span>📍</span>
+    <div>
+      <strong>Easy Booking</strong>
+      <small>Request a ride in just a few clicks.</small>
+    </div>
+  </div>
+
+  <div class="feature">
+    <span>🚗</span>
+    <div>
+      <strong>Reliable Drivers</strong>
+      <small>Connect with trusted drivers near you.</small>
+    </div>
+  </div>
+
+  <div class="feature">
+    <span>⚡</span>
+    <div>
+      <strong>Real-Time Tracking</strong>
+      <small>Follow your ride from pickup to destination.</small>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- Registration Form -->
+<div class="auth-form">
+
+  <div class="mobile-logo">
+    🚘 RideNow
+  </div>
+
+  <h2>Create Your Account</h2>
+
+  <p class="subtitle">
+    Join RideNow and get moving.
+  </p>
 
   <form [formGroup]="registerForm" (ngSubmit)="register()">
 
     <div class="form-group">
       <label>Full Name</label>
+
       <input
         type="text"
         formControlName="fullName"
@@ -14,7 +65,8 @@
     </div>
 
     <div class="form-group">
-      <label>Email</label>
+      <label>Email Address</label>
+
       <input
         type="email"
         formControlName="email"
@@ -24,10 +76,11 @@
 
     <div class="form-group">
       <label>Password</label>
+
       <input
         type="password"
         formControlName="password"
-        placeholder="Enter your password"
+        placeholder="Create a password"
       >
     </div>
 
@@ -35,15 +88,25 @@
       <label>Account Type</label>
 
       <select formControlName="role">
-        <option value="rider">Rider</option>
-        <option value="driver">Driver</option>
+        <option value="rider">🚶 Rider</option>
+        <option value="driver">🚗 Driver</option>
       </select>
     </div>
 
-    <button type="submit">
-      Register
+    <button
+      type="submit"
+      [disabled]="registerForm.invalid"
+    >
+      Create Account
     </button>
 
   </form>
 
+  <div class="auth-link">
+    Already have an account?
+    <a routerLink="/login">Sign In</a>
+  </div>
+
 </div>
+
+  </div></div>

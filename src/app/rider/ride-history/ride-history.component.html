@@ -1,5 +1,9 @@
 <div class="ride-history">
 
+  <button routerLink="/rider-dashboard" class="back-btn">
+    ← Back
+  </button>
+
   <h1>My Rides 📋</h1>
   <p>Track your current ride and view your previous trips.</p>
 
@@ -112,13 +116,15 @@
           {{ ride.pickup }} → {{ ride.destination }}
         </h3>
 
-        <span class="history-status" [class.active-status]="
-          ride.status !== 'completed' &&
-          ride.status !== 'cancelled'
-        ">
-          {{ ride.status }}
-        </span>
+        <span class="status">
+          <span *ngIf="ride.status === 'cancelled'">
+            ❌ Cancelled by {{ ride.cancelledBy === 'driver' ? 'Driver' : 'Rider' }}
+          </span>
 
+          <span *ngIf="ride.status !== 'cancelled'">
+            {{ ride.status }}
+          </span>
+        </span>
       </div>
 
       <p>
@@ -149,6 +155,56 @@
 
       <div class="paid-message" *ngIf="ride.paymentStatus === 'paid'">
         ✅ Paid
+      </div>
+
+      <div class="rating-section" *ngIf="
+    ride.status === 'completed' &&
+    ride.paymentStatus === 'paid'
+  ">
+
+        <div *ngIf="!ride.rating">
+
+          <p><strong>How was your ride?</strong></p>
+
+          <button class="rate-btn" (click)="selectRideForRating(ride)">
+            ⭐ Rate Driver
+          </button>
+
+        </div>
+
+        <div class="rating-form" *ngIf="selectedRide?.id === ride.id">
+
+          <p>Give your driver a rating:</p>
+
+          <div class="stars">
+
+            <button *ngFor="let star of [1,2,3,4,5]" type="button" [class.selected]="rating >= star"
+              (click)="rating = star">
+              ⭐
+            </button>
+
+          </div>
+
+          <textarea [(ngModel)]="ratingComment" placeholder="Leave a comment (optional)" rows="3"></textarea>
+
+          <div class="rating-actions">
+
+            <button class="submit-rating" (click)="submitRating()">
+              Submit Rating
+            </button>
+
+            <button class="cancel-rating" (click)="selectedRide = null">
+              Cancel
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="already-rated" *ngIf="ride.rating">
+          ⭐ You rated this driver {{ ride.rating }}/5
+        </div>
+
       </div>
 
       <p>

@@ -10,8 +10,10 @@ import { RoleGuard } from './core/role.guard';
 import { RequestRideComponent } from './rider/request-ride/request-ride.component';
 import { RideHistoryComponent } from './rider/ride-history/ride-history.component';
 import { ProfileComponent } from './rider/profile/profile.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'rider-dashboard', component: RiderDashboardComponent, canActivate: [RoleGuard], data: { role: 'rider' } },

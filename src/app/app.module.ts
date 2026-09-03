@@ -15,6 +15,11 @@ import { DashboardComponent } from './rider/dashboard/dashboard.component';
 import { RequestRideComponent } from './rider/request-ride/request-ride.component';
 import { RideHistoryComponent } from './rider/ride-history/ride-history.component';
 import { ProfileComponent } from './rider/profile/profile.component';
+import { DashboardComponent as DriverDashboardComponent } from './driver/dashboard/dashboard.component';
+import { ModalComponent } from './shared/modal/modal.component';
+import { HomeComponent } from './home/home.component';
+
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,12 +30,16 @@ import { ProfileComponent } from './rider/profile/profile.component';
     RequestRideComponent,
     RideHistoryComponent,
     ProfileComponent,
+    DriverDashboardComponent,
+    ModalComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule

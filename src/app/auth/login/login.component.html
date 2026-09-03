@@ -1,11 +1,61 @@
-<div class="login-container">
+<div class="auth-page">  <div class="auth-card"><!-- Left Side -->
+<div class="auth-info">
 
-  <h2>Welcome Back to RideNow</h2>
+  <div class="logo">
+    🚘 <span>RideNow</span>
+  </div>
+
+  <h1>Get where<br>you're going.</h1>
+
+  <p>
+    Fast, reliable and convenient rides at your fingertips.
+    Login to continue your journey with RideNow.
+  </p>
+
+  <div class="feature">
+    <span>📍</span>
+    <div>
+      <strong>Book a Ride</strong>
+      <small>Choose your pickup and destination.</small>
+    </div>
+  </div>
+
+  <div class="feature">
+    <span>🚗</span>
+    <div>
+      <strong>Track Your Driver</strong>
+      <small>See your ride status in real time.</small>
+    </div>
+  </div>
+
+  <div class="feature">
+    <span>⭐</span>
+    <div>
+      <strong>Rate Your Ride</strong>
+      <small>Share your experience with your driver.</small>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- Login Form -->
+<div class="auth-form">
+
+  <div class="mobile-logo">
+    🚘 RideNow
+  </div>
+
+  <h2>Welcome Back!</h2>
+
+  <p class="subtitle">
+    Login to continue your RideNow journey.
+  </p>
 
   <form [formGroup]="loginForm" (ngSubmit)="login()">
 
     <div class="form-group">
-      <label>Email</label>
+      <label>Email Address</label>
 
       <input
         type="email"
@@ -25,9 +75,16 @@
     </div>
 
     <button type="submit">
-      Login
+      Login to RideNow 🚗
     </button>
 
   </form>
 
+  <div class="auth-link">
+    Don't have an account?
+    <a routerLink="/register">Create New Account</a>
+  </div>
+
 </div>
+
+  </div></div>

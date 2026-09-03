@@ -1,100 +1,544 @@
 <div class="driver-dashboard">
 
+  <!-- HEADER -->
   <header class="dashboard-header">
 
-    <div>
-      <h1>RideNow 🚘</h1>
-      <p>Driver Dashboard</p>
+    <div class="brand">
+
+      <div class="brand-icon">
+        🚘
+      </div>
+
+      <div>
+        <h1>RideNow</h1>
+        <p>Driver Dashboard</p>
+      </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+      <div class="online-status">
+
+        <div class="status-display">
+
+          <span
+            class="status-dot"
+            [class.online]="isOnline"
+            [class.offline]="!isOnline">
+          </span>
+
+          <span class="status-text">
+            {{ isOnline ? 'Online' : 'Offline' }}
+          </span>
+
+        </div>
+
+
+        <button
+          class="online-btn"
+          (click)="toggleOnlineStatus()"
+          [disabled]="loadingStatus">
+
+          {{
+            loadingStatus
+              ? 'Updating...'
+              : (isOnline ? 'Go Offline' : 'Go Online')
+          }}
+
+        </button>
+
+      </div>
+
+
+      <!-- LOGOUT BUTTON -->
+
+      <button
+        class="logout-btn"
+        (click)="logout()">
+
+        ↪ Logout
+
+      </button>
+
     </div>
 
   </header>
 
+
+  <!-- MAIN -->
   <main class="dashboard-content">
 
-    <div class="welcome-section">
-      <h2>Available Ride Requests</h2>
-      <p>Accept a ride request to start helping riders.</p>
-    </div>
+    <!-- WELCOME -->
 
-    <!-- No ride requests -->
-    <div class="empty-state" *ngIf="rides.length === 0">
+    <section class="welcome-section">
 
-      <div class="empty-icon">🚗</div>
+      <div>
 
-      <h3>No ride requests</h3>
+        <span class="section-label">
+          DRIVER CENTER
+        </span>
 
-      <p>
-        There are currently no available ride requests.
-      </p>
+        <h2>
+          Ready to hit the road? 🚗
+        </h2>
 
-    </div>
+        <p>
+          Manage your rides, track your earnings and keep your
+          passengers moving.
+        </p>
+
+      </div>
+
+    </section>
 
 
-    <!-- Available rides -->
-    <div class="ride-list" *ngIf="rides.length > 0">
+    <!-- EARNINGS -->
+
+    <section class="earnings-section">
+
+      <div class="earnings-main">
+
+        <div>
+
+          <span class="card-label">
+            TOTAL EARNINGS
+          </span>
+
+          <h2>
+            ₦{{ totalEarnings | number }}
+          </h2>
+
+          <p>
+            From completed rides
+          </p>
+
+        </div>
+
+        <div class="earnings-icon">
+          💰
+        </div>
+
+      </div>
+
+
+      <div class="earnings-stats">
+
+        <div class="stat-box">
+
+          <span>
+            Today's Earnings
+          </span>
+
+          <strong>
+            ₦{{ todayEarnings | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="stat-box">
+
+          <span>
+            Completed Rides
+          </span>
+
+          <strong>
+            {{ completedRides }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RIDE MANAGEMENT -->
+
+    <section class="rides-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="section-label">
+            RIDE MANAGEMENT
+          </span>
+
+          <h2>
+            Available Ride Requests
+          </h2>
+
+          <p>
+            Accept a request to start your next trip.
+          </p>
+
+        </div>
+
+        <div class="ride-count">
+          {{ rides.length }} Rides
+        </div>
+
+      </div>
+
+
+      <!-- EMPTY STATE -->
 
       <div
-        class="ride-card"
-        *ngFor="let ride of rides"
-      >
+        class="empty-state"
+        *ngIf="rides.length === 0">
 
-        <div class="ride-card-header">
+        <div class="empty-icon">
+          🚗
+        </div>
+
+        <h3>
+          No ride requests
+        </h3>
+
+        <p>
+          New ride requests will appear here when available.
+        </p>
+
+      </div>
+
+
+      <!-- RIDE LIST -->
+
+      <div
+        class="ride-list"
+        *ngIf="rides.length > 0">
+
+        <div
+          class="ride-card"
+          *ngFor="let ride of rides">
+
+
+          <!-- CARD HEADER -->
+
+          <div class="ride-card-header">
+
+            <div>
+
+              <span class="ride-label">
+
+                {{
+                  ride.status === 'requested'
+                    ? 'NEW RIDE REQUEST'
+                    : 'ACTIVE RIDE'
+                }}
+
+              </span>
+
+              <h3>
+
+                {{ ride.pickup }}
+
+                <span>→</span>
+
+                {{ ride.destination }}
+
+              </h3>
+
+            </div>
+
+
+            <span class="ride-status">
+              {{ ride.status }}
+            </span>
+
+          </div>
+
+
+          <!-- ROUTE -->
+
+          <div class="route">
+
+            <div class="route-line">
+
+              <span
+                class="route-dot pickup-dot">
+              </span>
+
+              <div>
+
+                <small>
+                  Pickup
+                </small>
+
+                <strong>
+                  {{ ride.pickup }}
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="route-line">
+
+              <span
+                class="route-dot destination-dot">
+              </span>
+
+              <div>
+
+                <small>
+                  Destination
+                </small>
+
+                <strong>
+                  {{ ride.destination }}
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- RIDE DETAILS -->
+
+          <div class="ride-details">
+
+            <div>
+
+              <span>
+                Ride Type
+              </span>
+
+              <strong>
+                {{ ride.rideType }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Fare
+              </span>
+
+              <strong>
+                ₦{{ ride.fare || 0 }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- ACCEPT -->
+
+          <button
+            *ngIf="ride.status === 'requested'"
+            class="accept-btn"
+            (click)="acceptRide(ride)">
+
+            Accept Ride 🚗
+
+          </button>
+
+
+          <!-- CANCEL -->
+
+          <button
+            *ngIf="
+              ride.status === 'accepted' ||
+              ride.status === 'arriving' ||
+              ride.status === 'in_progress'
+            "
+            class="cancel-btn"
+            (click)="cancelRide(ride)">
+
+            ❌ Cancel Ride
+
+          </button>
+
+
+          <!-- STATUS ACTIONS -->
+
+          <div class="ride-actions">
+
+            <button
+              *ngIf="ride.status === 'accepted'"
+              class="action-btn"
+              (click)="updateRideStatus(ride, 'arriving')">
+
+              📍 Driver Arriving
+
+            </button>
+
+
+            <button
+              *ngIf="ride.status === 'arriving'"
+              class="action-btn"
+              (click)="updateRideStatus(ride, 'in_progress')">
+
+              🚗 Start Ride
+
+            </button>
+
+
+            <button
+              *ngIf="ride.status === 'in_progress'"
+              class="complete-btn"
+              (click)="updateRideStatus(ride, 'completed')">
+
+              🏁 Complete Ride
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RIDE HISTORY -->
+
+    <section class="driver-history">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="section-label">
+            ACTIVITY
+          </span>
+
+          <h2>
+            Ride History 📋
+          </h2>
+
+          <p>
+            Your completed and cancelled rides.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="history-card"
+        *ngFor="let ride of history">
+
+        <div class="history-header">
 
           <div>
-            <span class="ride-label">
-              NEW RIDE REQUEST
-            </span>
 
             <h3>
               {{ ride.pickup }}
               →
               {{ ride.destination }}
             </h3>
+
+            <span>
+              {{ ride.rideType }}
+            </span>
+
           </div>
 
-          <span class="ride-status">
+
+          <span
+            class="history-status"
+            [class.completed]="ride.status === 'completed'"
+            [class.cancelled]="ride.status === 'cancelled'">
+
             {{ ride.status }}
+
           </span>
 
         </div>
 
 
-        <div class="ride-details">
+        <div class="history-details">
 
           <div>
-            <span>Pickup</span>
-            <strong>{{ ride.pickup }}</strong>
+
+            <span>
+              Fare
+            </span>
+
+            <strong>
+              ₦{{ ride.fare || 0 }}
+            </strong>
+
           </div>
 
-          <div>
-            <span>Destination</span>
-            <strong>{{ ride.destination }}</strong>
-          </div>
 
           <div>
-            <span>Ride Type</span>
-            <strong>{{ ride.rideType }}</strong>
+
+            <span>
+              Payment
+            </span>
+
+            <strong>
+              {{ ride.paymentStatus || 'unpaid' }}
+            </strong>
+
           </div>
 
-          <div>
-            <span>Fare</span>
-            <strong>₦{{ ride.fare }}</strong>
+
+          <div *ngIf="ride.rating">
+
+            <span>
+              Rider Rating
+            </span>
+
+            <strong>
+              ⭐ {{ ride.rating }}/5
+            </strong>
+
           </div>
 
         </div>
 
+      </div>
 
-        <button
-          class="accept-btn"
-          (click)="acceptRide(ride)"
-        >
-          Accept Ride 🚗
-        </button>
+
+      <!-- NO HISTORY -->
+
+      <div
+        class="no-history"
+        *ngIf="history.length === 0">
+
+        <div>
+          📋
+        </div>
+
+        <h3>
+          No ride history yet
+        </h3>
+
+        <p>
+          Your completed and cancelled rides will appear here.
+        </p>
 
       </div>
 
-    </div>
+    </section>
 
   </main>
+
+
+  <!-- CUSTOM MODAL -->
+
+  <app-modal
+    [show]="modalVisible"
+    [title]="modalTitle"
+    [message]="modalMessage"
+    [type]="modalType"
+    (close)="closeModal()"
+    (confirm)="confirmAction()">
+  </app-modal>
 
 </div>

@@ -19,19 +19,24 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService
-  ) { }
+  ) {}
 
   register() {
+
     if (this.registerForm.invalid) {
       return;
     }
 
     const email = this.registerForm.value.email!;
     const password = this.registerForm.value.password!;
-
     const fullName = this.registerForm.value.fullName!;
     const role = this.registerForm.value.role as 'rider' | 'driver';
 
-    this.authService.register(email, password, fullName, role)
+    this.authService
+      .register(email, password, fullName, role)
+      .catch(error => {
+        console.error('Registration error:', error);
+        alert(error.message);
+      });
   }
 }

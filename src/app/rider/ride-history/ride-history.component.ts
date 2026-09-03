@@ -11,6 +11,9 @@ export class RideHistoryComponent implements OnInit {
 
   rides: any[] = [];
   activeRide: any = null;
+  selectedRide: any = null;
+  rating: number = 0;
+  ratingComment: string = '';
 
   constructor(
     private firestore: AngularFirestore,
@@ -79,4 +82,44 @@ export class RideHistoryComponent implements OnInit {
         alert('Payment failed. Please try again.');
       });
   }
+
+  selectRideForRating(ride: any) {
+  this.selectedRide = ride;
+  this.rating = 0;
+  this.ratingComment = '';
+}
+
+submitRating() {
+
+  if (!this.selectedRide) {
+    return;
+  }
+
+  if (this.rating === 0) {
+    alert('Please select a rating.');
+    return;
+  }
+
+  this.firestore
+    .collection('rides')
+    .doc(this.selectedRide.id)
+    .update({
+      rating: this.rating,
+      ratingComment: this.ratingComment,
+      ratedAt: new Date()
+    })
+    .then(() => {
+
+      alert('Thank you for rating your driver! ⭐');
+
+      this.selectedRide = null;
+
+    })
+    .catch(error => {
+
+      console.error('Error submitting rating:', error);
+      alert('Could not submit rating.');
+
+    });
+}
 }

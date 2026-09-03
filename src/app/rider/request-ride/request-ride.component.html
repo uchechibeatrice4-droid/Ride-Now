@@ -14,6 +14,20 @@
   <!-- Main Content -->
   <main class="request-container">
 
+    <!-- MAP -->
+    <section class="map-section">
+
+      <div class="map-heading">
+        <div>
+          <h3>📍 Choose your route</h3>
+          <p>Select your pickup and destination on the map.</p>
+        </div>
+      </div>
+
+      <div id="ride-map"></div>
+
+    </section>
+
     <div class="request-intro">
       <span class="location-icon">📍</span>
 
@@ -34,11 +48,7 @@
           <div class="input-content">
             <label>Pickup Location</label>
 
-            <input
-              type="text"
-              formControlName="pickup"
-              placeholder="Where should we pick you up?"
-            >
+            <input type="text" formControlName="pickup" placeholder="Where should we pick you up?">
           </div>
         </div>
 
@@ -50,11 +60,7 @@
           <div class="input-content">
             <label>Destination</label>
 
-            <input
-              type="text"
-              formControlName="destination"
-              placeholder="Where are you going?"
-            >
+            <input type="text" formControlName="destination" placeholder="Where are you going?">
           </div>
         </div>
 
@@ -68,11 +74,7 @@
         <div class="ride-options">
 
           <label class="ride-option">
-            <input
-              type="radio"
-              formControlName="rideType"
-              value="Standard"
-            >
+            <input type="radio" formControlName="rideType" value="Standard">
 
             <div class="ride-option-content">
               <div class="ride-icon">🚗</div>
@@ -86,11 +88,7 @@
           </label>
 
           <label class="ride-option">
-            <input
-              type="radio"
-              formControlName="rideType"
-              value="Premium"
-            >
+            <input type="radio" formControlName="rideType" value="Premium">
 
             <div class="ride-option-content">
               <div class="ride-icon">🚘</div>
@@ -107,8 +105,22 @@
 
       </section>
 
+      <button type="button" class="calculate-btn" (click)="calculateRoute()"
+        [disabled]="rideForm.get('pickup')?.invalid || rideForm.get('destination')?.invalid || loadingRoute">
+
+        {{ loadingRoute ? 'Calculating route...' : 'Get Fare Estimate 📍' }}
+
+      </button>
+
       <!-- Summary -->
       <section class="ride-summary">
+
+        <div>
+          <span>Distance</span>
+          <strong>
+            {{ distanceKm > 0 ? (distanceKm | number:'1.1-1') + ' km' : '--' }}
+          </strong>
+        </div>
 
         <div>
           <span>Ride type</span>
@@ -116,18 +128,53 @@
         </div>
 
         <div>
-          <span>Payment</span>
-          <strong>Cash</strong>
+          <span>Estimated fare</span>
+          <strong>
+            {{ estimatedFare > 0 ? ('₦' + estimatedFare) : '--' }}
+          </strong>
+        </div>
+
+      </section>
+
+      <section class="payment-section">
+
+        <h3>Choose payment method</h3>
+        <p>Payment will be completed after your ride.</p>
+
+        <div class="payment-options">
+
+          <label class="payment-option">
+            <input type="radio" formControlName="paymentMethod" value="cash">
+
+            <div class="payment-option-content">
+              <div class="payment-icon">💵</div>
+
+              <div>
+                <strong>Cash</strong>
+                <span>Pay the driver after your ride</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="payment-option">
+            <input type="radio" formControlName="paymentMethod" value="card">
+
+            <div class="payment-option-content">
+              <div class="payment-icon">💳</div>
+
+              <div>
+                <strong>Card</strong>
+                <span>Pay securely after your ride</span>
+              </div>
+            </div>
+          </label>
+
         </div>
 
       </section>
 
       <!-- Submit -->
-      <button
-        type="submit"
-        class="request-btn"
-        [disabled]="rideForm.invalid"
-      >
+      <button type="submit" class="request-btn" [disabled]="rideForm.invalid">
         Request Ride 🚗
       </button>
 
@@ -136,3 +183,7 @@
   </main>
 
 </div>
+
+<app-modal [show]="modalVisible" [title]="modalTitle" [message]="modalMessage" [type]="modalType" (close)="closeModal()"
+  (confirm)="confirmAction()">
+</app-modal>
