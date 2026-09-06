@@ -1,28 +1,34 @@
-<div class="rider-dashboard">
+<div class="dashboard">
 
-  <!-- Navigation -->
-  <nav class="dashboard-nav">
+  <!-- NAVBAR -->
+  <nav class="navbar">
 
-    <div class="nav-logo">
-      <h2>RideNow 🚗</h2>
+    <div class="brand">
+      <div class="brand-icon">🚗</div>
+
+      <div>
+        <h2>Ride<span>Now</span></h2>
+        <small>Move with ease</small>
+      </div>
     </div>
 
     <div class="nav-links">
 
-      <button (click)="goToRequestRide()">
-        🚗 Request Ride
+      <button class="nav-item active" (click)="goToRequestRide()">
+        <span>＋</span>
+        Request Ride
       </button>
 
-      <button (click)="goToRideHistory()">
-        📋 My Rides
+      <button class="nav-item" (click)="goToRideHistory()">
+        My Rides
       </button>
 
-      <button (click)="goToMyProfile()">
-        👤 My Profile
+      <button class="nav-item" (click)="goToMyProfile()">
+        My Profile
       </button>
 
-      <button class="logout-btn" (click)="logout()">
-        🚪 Logout
+      <button class="logout" (click)="logout()">
+        Logout
       </button>
 
     </div>
@@ -30,86 +36,526 @@
   </nav>
 
 
-  <!-- Dashboard Content -->
-  <main class="dashboard-content">
+  <!-- CONTENT -->
+  <main class="content">
 
-    <header class="dashboard-header">
+    <!-- WELCOME HERO -->
+    <section class="welcome-card">
 
-      <div>
-        <h1>Welcome back, Rider 👋</h1>
-        <p>Where would you like to go today?</p>
+      <div class="welcome-text">
+
+        <span class="mini-title">
+          WELCOME BACK 👋
+        </span>
+
+        <h1>
+          Where are you<br>
+          going today?
+        </h1>
+
+        <p>
+          Your comfortable ride is just a few clicks away.
+        </p>
+
+        <button class="request-button" (click)="goToRequestRide()">
+          <span>＋</span>
+          Request a Ride
+        </button>
+
       </div>
 
-    </header>
+
+      <div class="hero-illustration">
+
+        <div class="circle circle-one"></div>
+        <div class="circle circle-two"></div>
+
+        <div class="road">
+          <div class="road-line"></div>
+        </div>
+
+        <div class="hero-car">
+          🚗
+        </div>
+
+        <div class="location-pin pickup">
+          ●
+        </div>
+
+        <div class="location-pin destination">
+          ◆
+        </div>
+
+      </div>
+
+    </section>
 
 
-    <!-- Main Request Ride -->
-    <section class="welcome-section">
+    <!-- ACTIVE RIDE -->
+    <section class="active-ride" *ngIf="currentRide">
 
-      <h2>Ready to go somewhere?</h2>
+      <div class="card-top">
 
-      <p>
-        Request a ride and get to your destination safely and comfortably.
-      </p>
+        <div>
 
-      <button
-        class="request-btn"
-        (click)="goToRequestRide()"
-      >
-        Request a Ride 🚗
+          <span class="section-label">
+            YOUR CURRENT RIDE
+          </span>
+
+          <h2>
+            {{ getRideStatusTitle() }}
+          </h2>
+
+          <p>
+            {{ getRideStatusMessage() }}
+          </p>
+
+        </div>
+
+
+        <div class="status-pill">
+
+          <span></span>
+
+          {{ currentRide.status | titlecase }}
+
+        </div>
+
+      </div>
+
+
+      <!-- ROUTE -->
+      <div class="route-card">
+
+        <div class="route-point">
+
+          <div class="point pickup-point"></div>
+
+          <div>
+
+            <small>
+              Pickup
+            </small>
+
+            <strong>
+              {{ currentRide.pickup }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="route-connector"></div>
+
+
+        <div class="route-point">
+
+          <div class="point destination-point"></div>
+
+          <div>
+
+            <small>
+              Destination
+            </small>
+
+            <strong>
+              {{ currentRide.destination }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIDE DETAILS -->
+      <div class="ride-details">
+
+        <div class="detail">
+
+          <span>
+            Ride type
+          </span>
+
+          <strong>
+            {{ currentRide.rideType }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Distance
+          </span>
+
+          <strong>
+            {{ currentRide.distanceKm }} km
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Estimated fare
+          </span>
+
+          <strong>
+            ₦{{ currentRide.fare | number }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- DRIVER INFORMATION -->
+      <div class="driver-info-card" *ngIf="currentRide.driverId">
+
+        <div class="driver-info-header">
+
+          <div class="driver-avatar">
+            👤
+          </div>
+
+          <div>
+
+            <span class="section-label">
+              YOUR DRIVER
+            </span>
+
+            <h3>
+              {{ driver?.name || 'Driver information' }}
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <!-- DRIVER LOADING -->
+        <div class="driver-loading" *ngIf="loadingDriver">
+          Loading driver information...
+        </div>
+
+
+        <!-- DRIVER DETAILS -->
+        <div class="driver-details" *ngIf="!loadingDriver && driver">
+
+          <div class="driver-detail">
+
+            <span>
+              Vehicle
+            </span>
+
+            <strong>
+              {{ driver.vehicleModel || 'Not available' }}
+            </strong>
+
+          </div>
+
+
+          <div class="driver-detail">
+
+            <span>
+              Colour
+            </span>
+
+            <strong>
+              {{ driver.vehicleColor || 'Not available' }}
+            </strong>
+
+          </div>
+
+
+          <div class="driver-detail">
+
+            <span>
+              Plate Number
+            </span>
+
+            <strong>
+              {{ driver.plateNumber || 'Not available' }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- DRIVER NOT FOUND -->
+        <div class="driver-loading" *ngIf="!loadingDriver && !driver">
+          Driver information is not available yet.
+        </div>
+
+      </div>
+
+
+      <!-- PROGRESS -->
+      <div class="ride-progress">
+
+        <div class="progress-item" [class.active]="
+            currentRide.status === 'requested' ||
+            currentRide.status === 'accepted' ||
+            currentRide.status === 'arriving' ||
+            currentRide.status === 'arrived' ||
+            currentRide.status === 'in_progress'
+          ">
+
+          <div class="progress-circle">
+            1
+          </div>
+
+          <span>
+            Requested
+          </span>
+
+        </div>
+
+
+        <div class="progress-line" [class.active]="
+            currentRide.status !== 'requested'
+          "></div>
+
+
+        <div class="progress-item" [class.active]="
+            currentRide.status === 'accepted' ||
+            currentRide.status === 'arriving' ||
+            currentRide.status === 'arrived' ||
+            currentRide.status === 'in_progress'
+          ">
+
+          <div class="progress-circle">
+            2
+          </div>
+
+          <span>
+            Accepted
+          </span>
+
+        </div>
+
+
+        <div class="progress-line" [class.active]="
+            currentRide.status === 'arriving' ||
+            currentRide.status === 'arrived' ||
+            currentRide.status === 'in_progress'
+          "></div>
+
+
+        <div class="progress-item" [class.active]="
+            currentRide.status === 'arriving' ||
+            currentRide.status === 'arrived' ||
+            currentRide.status === 'in_progress'
+          ">
+
+          <div class="progress-circle">
+            3
+          </div>
+
+          <span>
+            Arriving
+          </span>
+
+        </div>
+
+
+        <div class="progress-line" [class.active]="
+            currentRide.status === 'arrived' ||
+            currentRide.status === 'in_progress'
+          "></div>
+
+
+        <div class="progress-item" [class.active]="
+            currentRide.status === 'arrived' ||
+            currentRide.status === 'in_progress'
+          ">
+
+          <div class="progress-circle">
+            4
+          </div>
+
+          <span>
+            Arrived
+          </span>
+
+        </div>
+
+
+        <div class="progress-line" [class.active]="
+            currentRide.status === 'in_progress'
+          "></div>
+
+
+        <div class="progress-item" [class.active]="
+            currentRide.status === 'in_progress'
+          ">
+
+          <div class="progress-circle">
+            5
+          </div>
+
+          <span>
+            In Ride
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- NO ACTIVE RIDE -->
+    <section class="no-ride" *ngIf="!loadingRide && !currentRide">
+
+      <div class="no-ride-icon">
+        🚘
+      </div>
+
+      <div>
+
+        <span class="section-label">
+          READY WHEN YOU ARE
+        </span>
+
+        <h2>
+          No active ride
+        </h2>
+
+        <p>
+          Choose your destination and let RideNow take you there.
+        </p>
+
+      </div>
+
+
+      <button (click)="goToRequestRide()">
+        Request a Ride
       </button>
 
     </section>
 
 
-    <!-- Dashboard Cards -->
-    <section class="dashboard-cards">
+    <!-- QUICK ACTIONS -->
+    <section class="quick-section">
 
-      <div class="dashboard-card">
+      <div class="section-heading">
 
-        <h3>📍 Request a Ride</h3>
+        <div>
 
-        <p>
-          Enter your pickup location and destination to request a ride.
-        </p>
+          <span class="section-label">
+            EXPLORE RIDENOW
+          </span>
 
-        <button (click)="goToRequestRide()">
-          Request Ride
-        </button>
+          <h2>
+            What would you like to do?
+          </h2>
 
-      </div>
-
-
-      <div class="dashboard-card">
-
-        <h3>📋 My Rides</h3>
-
-        <p>
-          Track your current ride and view your previous trips.
-        </p>
-
-        <button (click)="goToRideHistory()">
-          View My Rides
-        </button>
+        </div>
 
       </div>
 
 
-      <div class="dashboard-card">
+      <div class="quick-grid">
 
-        <h3>👤 My Profile</h3>
 
-        <p>
-          View your account information and profile details.
-        </p>
+        <!-- REQUEST RIDE -->
+        <div class="quick-card blue-card" (click)="goToRequestRide()">
 
-        <button (click)="goToMyProfile()">
-          View Profile
-        </button>
+          <div class="quick-icon">
+            🚗
+          </div>
+
+          <div>
+
+            <h3>
+              Request a Ride
+            </h3>
+
+            <p>
+              Get where you need to go.
+            </p>
+
+          </div>
+
+          <span class="arrow">
+            →
+          </span>
+
+        </div>
+
+
+        <!-- RIDE HISTORY -->
+        <div class="quick-card purple-card" (click)="goToRideHistory()">
+
+          <div class="quick-icon">
+            📋
+          </div>
+
+          <div>
+
+            <h3>
+              My Rides
+            </h3>
+
+            <p>
+              See your ride history.
+            </p>
+
+          </div>
+
+          <span class="arrow">
+            →
+          </span>
+
+        </div>
+
+
+        <!-- PROFILE -->
+        <div class="quick-card pink-card" (click)="goToMyProfile()">
+
+          <div class="quick-icon">
+            👤
+          </div>
+
+          <div>
+
+            <h3>
+              My Profile
+            </h3>
+
+            <p>
+              Manage your account.
+            </p>
+
+          </div>
+
+          <span class="arrow">
+            →
+          </span>
+
+        </div>
 
       </div>
 
     </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+      <strong>
+        RideNow
+      </strong>
+
+      · Safe rides, happy journeys 💙
+
+    </footer>
 
   </main>
 

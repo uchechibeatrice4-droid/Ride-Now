@@ -1,223 +1,424 @@
-<div class="ride-history">
-
-  <button routerLink="/rider-dashboard" class="back-btn">
+<div class="ride-history"> <button routerLink="/rider-dashboard" class="back-btn">
     ← Back
   </button>
-
   <h1>My Rides 📋</h1>
-  <p>Track your current ride and view your previous trips.</p>
-
-  <!-- CURRENT RIDE -->
+  <p>Track your current ride and view your previous trips.</p> <!-- CURRENT RIDE -->
   <section class="active-ride" *ngIf="activeRide">
-
     <div class="active-header">
+
       <div>
-        <span class="active-label">CURRENT RIDE</span>
-        <h2>{{ activeRide.pickup }} → {{ activeRide.destination }}</h2>
+        <span class="active-label">
+          CURRENT RIDE
+        </span>
+
+        <h2>
+          {{ activeRide.pickup }}
+          →
+          {{ activeRide.destination }}
+        </h2>
       </div>
 
       <span class="status-badge">
         {{ activeRide.status }}
       </span>
+
     </div>
 
-    <!-- Ride progress -->
+
+    <!-- RIDE PROGRESS -->
     <div class="ride-progress">
 
+      <!-- REQUESTED -->
       <div class="progress-step" [class.completed]="
-          activeRide.status === 'accepted' ||
-          activeRide.status === 'arriving' ||
-          activeRide.status === 'in_progress'
-        " [class.current]="activeRide.status === 'requested'">
+      activeRide.status === 'accepted' ||
+      activeRide.status === 'arriving' ||
+      activeRide.status === 'arrived' ||
+      activeRide.status === 'in_progress'
+    " [class.current]="
+      activeRide.status === 'requested'
+    ">
+
         <span>1</span>
         <p>Requested</p>
+
       </div>
 
-      <div class="progress-line" [class.completed-line]="
-          activeRide.status === 'accepted' ||
-          activeRide.status === 'arriving' ||
-          activeRide.status === 'in_progress'
-        "></div>
 
+      <div class="progress-line" [class.completed-line]="
+      activeRide.status === 'accepted' ||
+      activeRide.status === 'arriving' ||
+      activeRide.status === 'arrived' ||
+      activeRide.status === 'in_progress'
+    ">
+      </div>
+
+
+      <!-- ACCEPTED -->
       <div class="progress-step" [class.completed]="
-          activeRide.status === 'arriving' ||
-          activeRide.status === 'in_progress'
-        " [class.current]="activeRide.status === 'accepted'">
+      activeRide.status === 'arriving' ||
+      activeRide.status === 'arrived' ||
+      activeRide.status === 'in_progress'
+    " [class.current]="
+      activeRide.status === 'accepted'
+    ">
+
         <span>2</span>
         <p>Accepted</p>
+
       </div>
 
-      <div class="progress-line" [class.completed-line]="
-          activeRide.status === 'arriving' ||
-          activeRide.status === 'in_progress'
-        "></div>
 
-      <div class="progress-step" [class.completed]="activeRide.status === 'in_progress'"
-        [class.current]="activeRide.status === 'arriving'">
+      <div class="progress-line" [class.completed-line]="
+      activeRide.status === 'arriving' ||
+      activeRide.status === 'arrived' ||
+      activeRide.status === 'in_progress'
+    ">
+      </div>
+
+
+      <!-- ARRIVING -->
+      <div class="progress-step" [class.completed]="
+      activeRide.status === 'arrived' ||
+      activeRide.status === 'in_progress'
+    " [class.current]="
+      activeRide.status === 'arriving'
+    ">
+
         <span>3</span>
         <p>Arriving</p>
+
       </div>
 
-      <div class="progress-line" [class.completed-line]="
-          activeRide.status === 'in_progress'
-        "></div>
 
-      <div class="progress-step" [class.current]="activeRide.status === 'in_progress'">
+      <div class="progress-line" [class.completed-line]="
+      activeRide.status === 'arrived' ||
+      activeRide.status === 'in_progress'
+    ">
+      </div>
+
+
+      <!-- ARRIVED -->
+      <div class="progress-step" [class.completed]="
+      activeRide.status === 'in_progress'
+    " [class.current]="
+      activeRide.status === 'arrived'
+    ">
+
         <span>4</span>
+        <p>Arrived</p>
+
+      </div>
+
+
+      <div class="progress-line" [class.completed-line]="
+      activeRide.status === 'in_progress'
+    ">
+      </div>
+
+
+      <!-- IN PROGRESS -->
+      <div class="progress-step" [class.current]="
+      activeRide.status === 'in_progress'
+    ">
+
+        <span>5</span>
         <p>In Ride</p>
+
       </div>
 
     </div>
 
+
+    <!-- RIDE INFO -->
     <div class="ride-info">
 
       <div>
         <span>Pickup</span>
-        <strong>{{ activeRide.pickup }}</strong>
+
+        <strong>
+          {{ activeRide.pickup }}
+        </strong>
       </div>
+
 
       <div>
         <span>Destination</span>
-        <strong>{{ activeRide.destination }}</strong>
+
+        <strong>
+          {{ activeRide.destination }}
+        </strong>
       </div>
+
 
       <div>
         <span>Ride Type</span>
-        <strong>{{ activeRide.rideType }}</strong>
+
+        <strong>
+          {{ activeRide.rideType }}
+        </strong>
       </div>
 
     </div>
 
-  </section>
-
-
-  <!-- NO CURRENT RIDE -->
+  </section> <!-- NO CURRENT RIDE -->
   <section class="no-active-ride" *ngIf="!activeRide">
     <div>🚗</div>
-    <h2>No active ride</h2>
-    <p>You don't have a ride in progress right now.</p>
+
+    <h2>
+      No active ride
+    </h2>
+
+    <p>
+      You don't have a ride in progress right now.
+    </p>
 
     <button routerLink="/request-ride">
       Request a Ride
     </button>
-  </section>
 
-
-  <!-- RIDE HISTORY -->
+  </section> <!-- RIDE HISTORY -->
   <section class="history-section">
+    <h2>
+      All My Rides
+    </h2>
 
-    <h2>All My Rides</h2>
 
     <div class="ride-card" *ngFor="let ride of rides">
 
       <div class="ride-card-header">
 
         <h3>
-          {{ ride.pickup }} → {{ ride.destination }}
+          {{ ride.pickup }}
+          →
+          {{ ride.destination }}
         </h3>
 
         <span class="status">
+
           <span *ngIf="ride.status === 'cancelled'">
-            ❌ Cancelled by {{ ride.cancelledBy === 'driver' ? 'Driver' : 'Rider' }}
+            ❌ Cancelled by
+            {{ ride.cancelledBy === 'driver' ? 'Driver' : 'Rider' }}
           </span>
 
           <span *ngIf="ride.status !== 'cancelled'">
             {{ ride.status }}
           </span>
+
         </span>
+
       </div>
+
 
       <p>
         <strong>Ride Type:</strong>
         {{ ride.rideType }}
       </p>
 
+
       <p>
         <strong>Fare:</strong>
         ₦{{ ride.fare || 0 }}
       </p>
 
+
       <p>
         <strong>Payment:</strong>
+
         <span [class.paid]="ride.paymentStatus === 'paid'" [class.unpaid]="ride.paymentStatus !== 'paid'">
+
           {{ ride.paymentStatus || 'unpaid' }}
+
         </span>
+
       </p>
 
+
+      <!-- PAYMENT -->
       <div class="payment-action" *ngIf="
     ride.status === 'completed' &&
+    ride.paymentStatus !== 'paid' &&
+    cardPaymentRide?.id !== ride.id
+  ">
+        <div class="cash-payment" *ngIf="ride.paymentMethod === 'cash'">
+          <h3>💵 Cash Payment</h3>
+
+          <p>
+            Give <strong>₦{{ ride.fare | number }}</strong>
+            to the driver.
+          </p>
+
+          <button type="button" class="pay-btn" (click)="payForRide(ride)">
+            ✅ I've Paid Cash
+          </button>
+
+          <button type="button" class="change-payment-btn" (click)="switchToCard(ride)">
+            💳 Change to Card
+          </button>
+        </div>
+
+        <div class="card-payment" *ngIf="ride.paymentMethod === 'card'">
+          <h3>💳 Card Payment</h3>
+
+          <p>
+            Pay <strong>₦{{ ride.fare | number }}</strong>
+            securely with your card.
+          </p>
+
+          <button type="button" class="pay-btn" (click)="payForRide(ride)">
+            💳 Pay with Card
+          </button>
+
+          <button type="button" class="change-payment-btn" (click)="switchToCash(ride)">
+            💵 Change to Cash
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD DETAILS -->
+      <div class="card-payment" *ngIf="
+    cardPaymentRide?.id === ride.id &&
     ride.paymentStatus !== 'paid'
   ">
-        <button class="pay-btn" (click)="payForRide(ride)">
-          Pay ₦{{ ride.fare }}
+        <h3>💳 Card Payment</h3>
+
+        <p>
+          Enter your card details to pay
+          <strong>₦{{ ride.fare | number }}</strong>.
+        </p>
+
+        <input type="text" placeholder="Card Number" maxlength="19" [(ngModel)]="cardNumber"
+          [ngModelOptions]="{standalone: true}">
+
+        <input type="text" placeholder="Card Holder Name" [(ngModel)]="cardHolderName"
+          [ngModelOptions]="{standalone: true}">
+
+        <div class="card-row">
+          <input type="text" placeholder="MM/YY" maxlength="5" [(ngModel)]="cardExpiry"
+            [ngModelOptions]="{standalone: true}">
+
+          <input type="password" placeholder="CVV" maxlength="4" [(ngModel)]="cardCvv"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <button type="button" class="pay-btn" (click)="payWithCard()" [disabled]="paymentProcessingRideId === ride.id">
+          {{
+          paymentProcessingRideId === ride.id
+          ? 'Processing Payment...'
+          : '💳 Pay ₦' + (ride.fare | number)
+          }}
+        </button>
+
+        <button type="button" class="change-payment-btn" (click)="switchToCash(ride)"
+          [disabled]="paymentProcessingRideId === ride.id">
+          💵 Change to Cash
         </button>
       </div>
 
+      <!-- PAID -->
       <div class="paid-message" *ngIf="ride.paymentStatus === 'paid'">
         ✅ Paid
       </div>
 
+      <!-- RATING -->
       <div class="rating-section" *ngIf="
-    ride.status === 'completed' &&
-    ride.paymentStatus === 'paid'
-  ">
+      ride.status === 'completed' &&
+      ride.paymentStatus === 'paid'
+    ">
 
         <div *ngIf="!ride.rating">
 
-          <p><strong>How was your ride?</strong></p>
+          <p>
+            <strong>
+              How was your ride?
+            </strong>
+          </p>
 
           <button class="rate-btn" (click)="selectRideForRating(ride)">
+
             ⭐ Rate Driver
+
           </button>
 
         </div>
 
+
         <div class="rating-form" *ngIf="selectedRide?.id === ride.id">
 
-          <p>Give your driver a rating:</p>
+          <p>
+            Give your driver a rating:
+          </p>
+
 
           <div class="stars">
 
             <button *ngFor="let star of [1,2,3,4,5]" type="button" [class.selected]="rating >= star"
               (click)="rating = star">
+
               ⭐
+
             </button>
 
           </div>
 
-          <textarea [(ngModel)]="ratingComment" placeholder="Leave a comment (optional)" rows="3"></textarea>
+
+          <textarea [(ngModel)]="ratingComment" placeholder="Leave a comment (optional)" rows="3">
+      </textarea>
+
 
           <div class="rating-actions">
 
             <button class="submit-rating" (click)="submitRating()">
+
               Submit Rating
+
             </button>
 
+
             <button class="cancel-rating" (click)="selectedRide = null">
+
               Cancel
+
             </button>
 
           </div>
 
         </div>
 
+
         <div class="already-rated" *ngIf="ride.rating">
-          ⭐ You rated this driver {{ ride.rating }}/5
+
+          ⭐ You rated this driver
+          {{ ride.rating }}/5
+
         </div>
 
       </div>
 
+
       <p>
-        <strong>Requested:</strong>
+
+        <strong>
+          Requested:
+        </strong>
+
         {{ ride.createdAt?.toDate() | date:'medium' }}
+
       </p>
 
     </div>
 
+
+    <!-- NO RIDES -->
     <p *ngIf="rides.length === 0" class="no-rides">
+
       You haven't requested any rides yet.
+
     </p>
 
-  </section>
+    <!-- CUSTOM MODAL -->
+    <app-modal [show]="modalVisible" [title]="modalTitle" [message]="modalMessage" [type]="modalType"
+      (close)="closeModal()" (confirm)="confirmAction()">
+    </app-modal>
 
+  </section>
 </div>

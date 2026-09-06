@@ -23,10 +23,7 @@
 
         <div class="status-display">
 
-          <span
-            class="status-dot"
-            [class.online]="isOnline"
-            [class.offline]="!isOnline">
+          <span class="status-dot" [class.online]="isOnline" [class.offline]="!isOnline">
           </span>
 
           <span class="status-text">
@@ -36,15 +33,12 @@
         </div>
 
 
-        <button
-          class="online-btn"
-          (click)="toggleOnlineStatus()"
-          [disabled]="loadingStatus">
+        <button class="online-btn" (click)="toggleOnlineStatus()" [disabled]="loadingStatus">
 
           {{
-            loadingStatus
-              ? 'Updating...'
-              : (isOnline ? 'Go Offline' : 'Go Online')
+          loadingStatus
+          ? 'Updating...'
+          : (isOnline ? 'Go Offline' : 'Go Online')
           }}
 
         </button>
@@ -54,9 +48,7 @@
 
       <!-- LOGOUT BUTTON -->
 
-      <button
-        class="logout-btn"
-        (click)="logout()">
+      <button class="logout-btn" (click)="logout()">
 
         ↪ Logout
 
@@ -92,6 +84,166 @@
       </div>
 
     </section>
+    <!-- DRIVER PROFILE -->
+
+    <section class="driver-profile-card">
+
+      <div class="driver-profile-main">
+
+        <div class="driver-avatar">
+          👤
+        </div>
+
+        <div class="driver-profile-info">
+
+          <span class="section-label">
+            DRIVER PROFILE
+          </span>
+
+          <h2>
+            {{ profileForm.get('name')?.value || 'Driver Name' }}
+          </h2>
+
+          <div class="driver-rating">
+            ⭐ New Driver
+          </div>
+
+        </div>
+
+        <button type="button" class="edit-profile-btn" (click)="openProfileEdit()">
+          ✎ Edit
+        </button>
+
+      </div>
+
+
+      <div class="vehicle-info">
+
+        <div class="vehicle-item">
+
+          <span>Vehicle</span>
+
+          <strong>
+            {{ profileForm.get('vehicleModel')?.value || 'Not added' }}
+          </strong>
+
+        </div>
+
+
+        <div class="vehicle-item">
+
+          <span>Colour</span>
+
+          <strong>
+            {{ profileForm.get('vehicleColor')?.value || 'Not added' }}
+          </strong>
+
+        </div>
+
+
+        <div class="vehicle-item">
+
+          <span>Plate Number</span>
+
+          <strong>
+            {{ profileForm.get('plateNumber')?.value || 'Not added' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- EDIT PROFILE MODAL -->
+
+    <div class="profile-modal-overlay" *ngIf="profileEditVisible" (click)="closeProfileEdit()">
+
+      <div class="profile-modal" (click)="$event.stopPropagation()">
+
+        <div class="profile-modal-header">
+
+          <div>
+
+            <span class="section-label">
+              DRIVER PROFILE
+            </span>
+
+            <h2>
+              Edit Profile
+            </h2>
+
+          </div>
+
+          <button type="button" class="profile-close-btn" (click)="closeProfileEdit()">
+            ×
+          </button>
+
+        </div>
+
+
+        <form [formGroup]="profileForm" (ngSubmit)="saveDriverProfile()" class="profile-form">
+
+          <div class="profile-field">
+
+            <label>
+              Driver Name
+            </label>
+
+            <input type="text" formControlName="name" placeholder="Enter your full name">
+
+          </div>
+
+
+          <div class="profile-field">
+
+            <label>
+              Vehicle Model
+            </label>
+
+            <input type="text" formControlName="vehicleModel" placeholder="e.g. Toyota Camry">
+
+          </div>
+
+
+          <div class="profile-field">
+
+            <label>
+              Vehicle Colour
+            </label>
+
+            <input type="text" formControlName="vehicleColor" placeholder="e.g. Blue">
+
+          </div>
+
+
+          <div class="profile-field">
+
+            <label>
+              Plate Number
+            </label>
+
+            <input type="text" formControlName="plateNumber" placeholder="e.g. ABC-123XY">
+
+          </div>
+
+
+          <button type="submit" class="save-profile-btn" [disabled]="savingProfile">
+
+            {{
+            savingProfile
+            ? 'Saving...'
+            : 'Save Changes'
+            }}
+
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
 
 
     <!-- EARNINGS -->
@@ -186,9 +338,7 @@
 
       <!-- EMPTY STATE -->
 
-      <div
-        class="empty-state"
-        *ngIf="rides.length === 0">
+      <div class="empty-state" *ngIf="rides.length === 0">
 
         <div class="empty-icon">
           🚗
@@ -207,13 +357,9 @@
 
       <!-- RIDE LIST -->
 
-      <div
-        class="ride-list"
-        *ngIf="rides.length > 0">
+      <div class="ride-list" *ngIf="rides.length > 0">
 
-        <div
-          class="ride-card"
-          *ngFor="let ride of rides">
+        <div class="ride-card" *ngFor="let ride of rides">
 
 
           <!-- CARD HEADER -->
@@ -225,9 +371,9 @@
               <span class="ride-label">
 
                 {{
-                  ride.status === 'requested'
-                    ? 'NEW RIDE REQUEST'
-                    : 'ACTIVE RIDE'
+                ride.status === 'requested'
+                ? 'NEW RIDE REQUEST'
+                : 'ACTIVE RIDE'
                 }}
 
               </span>
@@ -258,8 +404,7 @@
 
             <div class="route-line">
 
-              <span
-                class="route-dot pickup-dot">
+              <span class="route-dot pickup-dot">
               </span>
 
               <div>
@@ -279,8 +424,7 @@
 
             <div class="route-line">
 
-              <span
-                class="route-dot destination-dot">
+              <span class="route-dot destination-dot">
               </span>
 
               <div>
@@ -311,7 +455,20 @@
               </span>
 
               <strong>
-                {{ ride.rideType }}
+                {{ ride.rideType || 'Standard' }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Distance
+              </span>
+
+              <strong>
+                {{ ride.distanceKm ? (ride.distanceKm | number:'1.1-1') + ' km' : '--' }}
               </strong>
 
             </div>
@@ -324,7 +481,21 @@
               </span>
 
               <strong>
-                ₦{{ ride.fare || 0 }}
+                ₦{{ ride.fare || 0 | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Requested
+              </span>
+
+              <strong>
+                {{ ride.createdAt ? (ride.createdAt.toDate ? (ride.createdAt.toDate() | date:'shortTime') :
+                (ride.createdAt | date:'shortTime')) : '--' }}
               </strong>
 
             </div>
@@ -332,31 +503,24 @@
           </div>
 
 
+
           <!-- ACCEPT -->
 
-          <button
-            *ngIf="ride.status === 'requested'"
-            class="accept-btn"
-            (click)="acceptRide(ride)">
+          <button *ngIf="ride.status === 'requested'" class="accept-btn" (click)="acceptRide(ride)">
 
             Accept Ride 🚗
 
           </button>
 
 
+
           <!-- CANCEL -->
 
-          <button
-            *ngIf="
-              ride.status === 'accepted' ||
-              ride.status === 'arriving' ||
-              ride.status === 'in_progress'
-            "
-            class="cancel-btn"
-            (click)="cancelRide(ride)">
-
+          <button *ngIf="
+    ride.status === 'accepted' ||
+    ride.status === 'arriving'
+  " class="cancel-btn" (click)="cancelRide(ride)">
             ❌ Cancel Ride
-
           </button>
 
 
@@ -364,19 +528,24 @@
 
           <div class="ride-actions">
 
-            <button
-              *ngIf="ride.status === 'accepted'"
-              class="action-btn"
-              (click)="updateRideStatus(ride, 'arriving')">
+            <!-- ACCEPTED -->
+            <button *ngIf="ride.status === 'accepted'" class="action-btn" (click)="updateRideStatus(ride, 'arriving')">
 
-              📍 Driver Arriving
+              📍 I'm Arriving
 
             </button>
 
 
-            <button
-              *ngIf="ride.status === 'arriving'"
-              class="action-btn"
+            <!-- ARRIVING -->
+            <button *ngIf="ride.status === 'arriving'" class="action-btn" (click)="updateRideStatus(ride, 'arrived')">
+
+              📍 I've Arrived
+
+            </button>
+
+
+            <!-- ARRIVED -->
+            <button *ngIf="ride.status === 'arrived'" class="action-btn"
               (click)="updateRideStatus(ride, 'in_progress')">
 
               🚗 Start Ride
@@ -384,9 +553,8 @@
             </button>
 
 
-            <button
-              *ngIf="ride.status === 'in_progress'"
-              class="complete-btn"
+            <!-- IN PROGRESS -->
+            <button *ngIf="ride.status === 'in_progress'" class="complete-btn"
               (click)="updateRideStatus(ride, 'completed')">
 
               🏁 Complete Ride
@@ -427,9 +595,7 @@
       </div>
 
 
-      <div
-        class="history-card"
-        *ngFor="let ride of history">
+      <div class="history-card" *ngFor="let ride of history">
 
         <div class="history-header">
 
@@ -448,9 +614,7 @@
           </div>
 
 
-          <span
-            class="history-status"
-            [class.completed]="ride.status === 'completed'"
+          <span class="history-status" [class.completed]="ride.status === 'completed'"
             [class.cancelled]="ride.status === 'cancelled'">
 
             {{ ride.status }}
@@ -507,9 +671,7 @@
 
       <!-- NO HISTORY -->
 
-      <div
-        class="no-history"
-        *ngIf="history.length === 0">
+      <div class="no-history" *ngIf="history.length === 0">
 
         <div>
           📋
@@ -532,13 +694,8 @@
 
   <!-- CUSTOM MODAL -->
 
-  <app-modal
-    [show]="modalVisible"
-    [title]="modalTitle"
-    [message]="modalMessage"
-    [type]="modalType"
-    (close)="closeModal()"
-    (confirm)="confirmAction()">
+  <app-modal [show]="modalVisible" [title]="modalTitle" [message]="modalMessage" [type]="modalType"
+    (close)="closeModal()" (confirm)="confirmAction()">
   </app-modal>
 
 </div>

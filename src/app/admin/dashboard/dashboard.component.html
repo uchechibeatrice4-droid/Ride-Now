@@ -1,5 +1,6 @@
 <div class="admin-dashboard">
 
+    <!-- HEADER -->
     <header class="admin-header">
 
         <div>
@@ -7,11 +8,16 @@
             <p>Admin Dashboard</p>
         </div>
 
-    </header>
 
+        <button type="button" class="logout-btn" (click)="logout()">
+            🚪 Logout
+        </button>
+
+    </header>
 
     <main class="admin-content">
 
+        <!-- WELCOME -->
         <section class="welcome-section">
 
             <h2>Welcome, Admin 👋</h2>
@@ -23,10 +29,13 @@
         </section>
 
 
+        <!-- ========================= -->
         <!-- STATISTICS -->
+        <!-- ========================= -->
 
         <section class="stats-grid">
 
+            <!-- TOTAL USERS -->
             <div class="stat-card">
 
                 <div class="stat-icon">👥</div>
@@ -39,9 +48,49 @@
             </div>
 
 
+            <!-- RIDERS -->
+            <div class="stat-card">
+
+                <div class="stat-icon">🧑‍💼</div>
+
+                <div>
+                    <span>Total Riders</span>
+                    <h2>{{ totalRiders }}</h2>
+                </div>
+
+            </div>
+
+
+            <!-- DRIVERS -->
             <div class="stat-card">
 
                 <div class="stat-icon">🚗</div>
+
+                <div>
+                    <span>Total Drivers</span>
+                    <h2>{{ totalDrivers }}</h2>
+                </div>
+
+            </div>
+
+
+            <!-- ACTIVE DRIVERS -->
+            <div class="stat-card">
+
+                <div class="stat-icon">🟢</div>
+
+                <div>
+                    <span>Active Drivers</span>
+                    <h2>{{ activeDrivers }}</h2>
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL RIDES -->
+            <div class="stat-card">
+
+                <div class="stat-icon">🚘</div>
 
                 <div>
                     <span>Total Rides</span>
@@ -51,6 +100,7 @@
             </div>
 
 
+            <!-- COMPLETED -->
             <div class="stat-card">
 
                 <div class="stat-icon">🏁</div>
@@ -63,6 +113,7 @@
             </div>
 
 
+            <!-- CANCELLED -->
             <div class="stat-card">
 
                 <div class="stat-icon">❌</div>
@@ -75,29 +126,134 @@
             </div>
 
 
+            <!-- REVENUE -->
             <div class="stat-card">
 
                 <div class="stat-icon">💰</div>
 
                 <div>
                     <span>Total Revenue</span>
-                    <h2>₦{{ totalRevenue }}</h2>
+
+                    <h2>
+                        ₦{{ totalRevenue | number }}
+                    </h2>
+
                 </div>
 
             </div>
 
         </section>
 
+        <!-- ========================= -->
+        <!-- ADMIN FEES -->
+        <!-- ========================= -->
 
+        <section class="fees-management">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Manage Ride Fees 💰</h2>
+
+                    <p>
+                        Set the fare rates used when riders request rides.
+                    </p>
+                </div>
+
+                <button *ngIf="!editingFees" type="button" class="edit-fees-btn" (click)="editFees()">
+                    ✏️ Edit Fees
+                </button>
+
+            </div>
+
+
+            <div class="fees-grid">
+
+                <!-- STANDARD -->
+
+                <div class="fee-card">
+
+                    <h3>🚘 Standard Ride</h3>
+
+                    <div class="fee-input">
+
+                        <label>Base Fare (₦)</label>
+
+                        <input type="number" [(ngModel)]="standardBaseFare" min="0" [disabled]="!editingFees">
+
+                    </div>
+
+
+                    <div class="fee-input">
+
+                        <label>Price per KM (₦)</label>
+
+                        <input type="number" [(ngModel)]="standardPerKm" min="0" [disabled]="!editingFees">
+
+                    </div>
+
+                </div>
+
+
+                <!-- PREMIUM -->
+
+                <div class="fee-card">
+
+                    <h3>⭐ Premium Ride</h3>
+
+                    <div class="fee-input">
+
+                        <label>Base Fare (₦)</label>
+
+                        <input type="number" [(ngModel)]="premiumBaseFare" min="0" [disabled]="!editingFees">
+
+                    </div>
+
+
+                    <div class="fee-input">
+
+                        <label>Price per KM (₦)</label>
+
+                        <input type="number" [(ngModel)]="premiumPerKm" min="0" [disabled]="!editingFees">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="fees-actions" *ngIf="editingFees">
+
+                <button type="button" class="cancel-fees-btn" (click)="cancelEditFees()" [disabled]="savingFees">
+                    Cancel
+                </button>
+
+                <button type="button" class="save-fees-btn" (click)="saveFees()" [disabled]="savingFees">
+                    {{ savingFees ? 'Saving...' : '💾 Save Fees' }}
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
         <!-- RECENT RIDES -->
+        <!-- ========================= -->
 
         <section class="recent-rides">
 
             <div class="section-heading">
 
                 <div>
+
                     <h2>Recent Rides 📋</h2>
-                    <p>Latest ride activity on RideNow.</p>
+
+                    <p>
+                        Latest ride activity on RideNow.
+                    </p>
+
                 </div>
 
             </div>
@@ -105,40 +261,50 @@
 
             <div class="ride-row" *ngFor="let ride of recentRides">
 
+                <!-- ROUTE -->
+
                 <div class="ride-route">
 
                     <strong>
-                        {{ ride.pickup }} → {{ ride.destination }}
+                        {{ ride.pickup || 'Unknown pickup' }}
+                        →
+                        {{ ride.destination || 'Unknown destination' }}
                     </strong>
 
                     <span>
-                        {{ ride.rideType }}
+                        {{ ride.rideType || 'Standard' }}
                     </span>
 
                 </div>
 
 
+                <!-- FARE -->
+
                 <div class="ride-fare">
 
                     <strong>
-                        ₦{{ ride.fare || 0 }}
+                        ₦{{ ride.fare || 0 | number }}
                     </strong>
 
-                    <span>
+                    <span [class.paid]="ride.paymentStatus === 'paid'" [class.unpaid]="ride.paymentStatus !== 'paid'">
                         {{ ride.paymentStatus || 'unpaid' }}
                     </span>
 
                 </div>
 
 
+                <!-- STATUS -->
+
                 <div class="ride-status">
 
-                    {{ ride.status }}
+                    {{ ride.status | titlecase }}
 
                 </div>
 
             </div>
 
+
+            <!-- EMPTY -->
 
             <div class="empty-state" *ngIf="recentRides.length === 0">
 
@@ -154,18 +320,186 @@
 
         </section>
 
+
+        <!-- ========================= -->
+        <!-- RIDE MANAGEMENT -->
+        <!-- ========================= -->
+
+        <section class="ride-management">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Manage Rides 🚘</h2>
+
+                    <p>
+                        View and monitor all rides on RideNow.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH + FILTER -->
+
+            <div class="ride-filters">
+
+                <div class="search-box">
+
+                    <input type="text" [(ngModel)]="rideSearchText" placeholder="Search pickup, destination, status...">
+
+                </div>
+
+
+                <select [(ngModel)]="selectedRideStatus">
+
+                    <option value="all">
+                        All Rides
+                    </option>
+
+                    <option value="requested">
+                        Requested
+                    </option>
+
+                    <option value="accepted">
+                        Accepted
+                    </option>
+
+                    <option value="arriving">
+                        Arriving
+                    </option>
+
+                    <option value="arrived">
+                        Arrived
+                    </option>
+
+                    <option value="in_progress">
+                        In Progress
+                    </option>
+
+                    <option value="completed">
+                        Completed
+                    </option>
+
+                    <option value="cancelled">
+                        Cancelled
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- RIDES -->
+
+            <div class="rides-list">
+
+                <div class="admin-ride-row" *ngFor="let ride of filteredRides">
+
+                    <!-- ROUTE -->
+
+                    <div class="admin-ride-route">
+
+                        <strong>
+                            {{ ride.pickup || 'Unknown pickup' }}
+                        </strong>
+
+                        <span>↓</span>
+
+                        <strong>
+                            {{ ride.destination || 'Unknown destination' }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- RIDE INFO -->
+
+                    <div class="admin-ride-info">
+
+                        <span>
+                            🚘
+                            {{ ride.rideType || 'Standard' }}
+                        </span>
+
+                        <span>
+                            💰
+                            ₦{{ ride.fare || 0 | number }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- PAYMENT -->
+
+                    <div class="admin-payment">
+
+                        <strong>
+                            {{ ride.paymentMethod || 'Not selected' | titlecase }}
+                        </strong>
+
+                        <span [class.paid]="ride.paymentStatus === 'paid'"
+                            [class.unpaid]="ride.paymentStatus !== 'paid'">
+                            {{ ride.paymentStatus || 'unpaid' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="admin-ride-status">
+
+                        <span>
+                            {{ ride.status | titlecase }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMPTY -->
+
+            <div class="empty-state" *ngIf="filteredRides.length === 0">
+
+                <div>🚘</div>
+
+                <h3>No rides found</h3>
+
+                <p>
+                    No rides match your search or filter.
+                </p>
+
+            </div>
+
+        </section>
+        <!-- ========================= -->
         <!-- USER MANAGEMENT -->
+        <!-- ========================= -->
 
         <section class="user-management">
 
             <div class="section-heading">
 
                 <div>
+
                     <h2>Manage Users 👥</h2>
-                    <p>View and manage RideNow users.</p>
+
+                    <p>
+                        View riders and manage driver activation.
+                    </p>
+
                 </div>
 
             </div>
+
+
+            <!-- SEARCH -->
 
             <div class="search-box">
 
@@ -174,15 +508,23 @@
             </div>
 
 
+            <!-- USERS -->
+
             <div class="users-list">
 
                 <div class="user-row" *ngFor="let user of filteredUsers">
 
+                    <!-- USER -->
+
                     <div class="user-info">
 
                         <div class="user-avatar">
-                            👤
+
+                            {{ user.role === 'driver' ? '🚗' :
+                            user.role === 'rider' ? '👤' : '🔐' }}
+
                         </div>
+
 
                         <div>
 
@@ -191,7 +533,7 @@
                             </strong>
 
                             <span>
-                                {{ user.email }}
+                                {{ user.email || 'No email' }}
                             </span>
 
                         </div>
@@ -199,32 +541,93 @@
                     </div>
 
 
+                    <!-- ROLE -->
+
                     <div class="user-role">
 
-                        {{ user.role | titlecase }}
+                        <span [class.driver-role]="user.role === 'driver'" [class.rider-role]="user.role === 'rider'"
+                            [class.admin-role]="user.role === 'admin'">
 
-                    </div>
+                            {{ user.role | titlecase }}
 
-
-                    <div>
-
-                        <span [class.active]="user.isActive" [class.inactive]="!user.isActive">
-                            {{ user.isActive ? 'Active' : 'Inactive' }}
                         </span>
 
                     </div>
 
 
-                    <button *ngIf="user.role !== 'admin'" (click)="toggleUserStatus(user)">
+                    <!-- STATUS -->
 
-                        {{ user.isActive ? 'Deactivate' : 'Activate' }}
+                    <div class="user-status">
 
-                    </button>
+                        <!-- DRIVER STATUS -->
+
+                        <ng-container *ngIf="user.role === 'driver'">
+
+                            <span class="active" *ngIf="user.isActive">
+                                🟢 Active
+                            </span>
+
+                            <span class="inactive" *ngIf="!user.isActive">
+                                🔴 Inactive
+                            </span>
+
+                        </ng-container>
+
+
+                        <!-- RIDER STATUS -->
+
+                        <span class="active" *ngIf="user.role === 'rider'">
+                            👤 Rider
+                        </span>
+
+
+                        <!-- ADMIN STATUS -->
+
+                        <span class="active" *ngIf="user.role === 'admin'">
+                            🔐 Protected
+                        </span>
+
+                    </div>
+
+
+                    <!-- ACTION -->
+
+                    <div class="user-action">
+
+                        <!-- DRIVER -->
+
+                        <button *ngIf="user.role === 'driver'" type="button" (click)="toggleUserStatus(user)">
+
+                            {{
+                            user.isActive
+                            ? 'Deactivate'
+                            : 'Activate'
+                            }}
+
+                        </button>
+
+
+                        <!-- RIDER -->
+
+                        <span class="no-action" *ngIf="user.role === 'rider'">
+                            No action
+                        </span>
+
+
+                        <!-- ADMIN -->
+
+                        <span class="no-action" *ngIf="user.role === 'admin'">
+                            Protected
+                        </span>
+
+                    </div>
 
                 </div>
 
             </div>
 
+
+            <!-- EMPTY -->
 
             <div class="empty-state" *ngIf="filteredUsers.length === 0">
 
@@ -240,6 +643,46 @@
 
         </section>
 
+
     </main>
+
+
+    <!-- ========================= -->
+    <!-- CUSTOM MODAL -->
+    <!-- ========================= -->
+
+    <!-- ADMIN MODAL -->
+
+    <div class="admin-modal-overlay" *ngIf="modalVisible" (click)="closeModal()">
+
+        <div class="admin-modal" (click)="$event.stopPropagation()">
+
+            <h3>{{ modalTitle }}</h3>
+
+            <p>{{ modalMessage }}</p>
+
+            <div class="admin-modal-actions">
+
+                <button *ngIf="modalType === 'confirm'" type="button" class="modal-cancel-btn" (click)="closeModal()">
+                    Cancel
+                </button>
+
+                <button type="button" class="modal-confirm-btn" (click)="
+          modalType === 'confirm'
+            ? confirmAction()
+            : closeModal()
+        ">
+                    {{
+                    modalType === 'confirm'
+                    ? 'Confirm'
+                    : 'OK'
+                    }}
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>

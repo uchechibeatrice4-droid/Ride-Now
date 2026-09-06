@@ -1,0 +1,751 @@
+/* =========================
+   ADMIN DASHBOARD
+========================= */
+
+.admin-dashboard {
+    min-height: 100vh;
+    background: #f6f8fc;
+    color: #344054;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.admin-header {
+    padding: 25px 6%;
+    background: #ffffff;
+    border-bottom: 1px solid #e8ecf5;
+}
+
+.admin-header h1 {
+    margin: 0;
+    color: #4776e6;
+    font-size: 28px;
+}
+
+.admin-header p {
+    margin: 5px 0 0;
+    color: #8b95a7;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.admin-content {
+    width: 88%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 35px 0 60px;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome-section {
+    margin-bottom: 28px;
+}
+
+.welcome-section h2 {
+    margin: 0 0 8px;
+    font-size: 25px;
+}
+
+.welcome-section p {
+    margin: 0;
+    color: #8b95a7;
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e8ecf5;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(37, 50, 85, 0.04);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf3ff;
+    border-radius: 14px;
+    font-size: 22px;
+}
+
+.stat-card span {
+    display: block;
+    color: #8b95a7;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.stat-card h2 {
+    margin: 0;
+    font-size: 23px;
+    color: #344054;
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.recent-rides,
+.ride-management,
+.user-management {
+    padding: 25px;
+    margin-bottom: 25px;
+    background: #ffffff;
+    border: 1px solid #e8ecf5;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(37, 50, 85, 0.04);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    margin: 0 0 5px;
+    font-size: 19px;
+}
+
+.section-heading p {
+    margin: 0;
+    color: #8b95a7;
+    font-size: 13px;
+}
+
+
+/* =========================
+   RECENT RIDES
+========================= */
+
+.ride-row {
+    display: grid;
+    grid-template-columns: 1fr 150px 130px;
+    gap: 20px;
+    align-items: center;
+    padding: 17px 0;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.ride-row:last-child {
+    border-bottom: none;
+}
+
+.ride-route strong {
+    display: block;
+    font-size: 13px;
+    color: #344054;
+}
+
+.ride-route span {
+    display: inline-block;
+    margin-top: 6px;
+    color: #8b95a7;
+    font-size: 11px;
+}
+
+.ride-fare strong {
+    display: block;
+    font-size: 14px;
+}
+
+.ride-fare span {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 11px;
+    text-transform: capitalize;
+}
+
+.ride-status {
+    padding: 7px 10px;
+    background: #edf3ff;
+    color: #4776e6;
+    border-radius: 10px;
+    font-size: 11px;
+    text-align: center;
+}
+
+
+/* =========================
+   SEARCH + FILTER
+========================= */
+
+.ride-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    flex: 1;
+}
+
+.search-box input,
+.ride-filters select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #dfe4ed;
+    border-radius: 12px;
+    outline: none;
+    background: #ffffff;
+    color: #344054;
+    font-size: 13px;
+}
+
+.ride-filters select {
+    width: 190px;
+}
+
+.search-box input:focus,
+.ride-filters select:focus {
+    border-color: #4776e6;
+}
+
+/* =========================
+   RIDE MANAGEMENT
+========================= */
+
+.rides-list {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-ride-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 120px;
+    gap: 18px;
+    align-items: center;
+    padding: 17px 0;
+    border-bottom: 1px solid #edf0f5;
+    min-width: 750px;
+}
+
+.admin-ride-row:last-child {
+    border-bottom: none;
+}
+
+.admin-ride-route strong {
+    display: block;
+    font-size: 12px;
+}
+
+.admin-ride-route span {
+    display: block;
+    margin: 4px 0;
+    color: #8b95a7;
+    font-size: 11px;
+}
+
+.admin-ride-info span {
+    display: block;
+    margin-bottom: 5px;
+    color: #667085;
+    font-size: 12px;
+}
+
+.admin-payment strong {
+    display: block;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.admin-payment span {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 11px;
+    text-transform: capitalize;
+}
+
+.admin-ride-status span {
+    display: inline-block;
+    padding: 7px 10px;
+    background: #edf3ff;
+    color: #4776e6;
+    border-radius: 9px;
+    font-size: 11px;
+    text-transform: capitalize;
+}
+
+
+/* =========================
+   PAYMENT STATUS
+========================= */
+
+.paid {
+    color: #1a9b62 !important;
+}
+
+.unpaid {
+    color: #d97706 !important;
+}
+
+
+/* =========================
+   USERS
+========================= */
+
+.users-list {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.user-row {
+    display: grid;
+    grid-template-columns: 1fr 110px 100px 110px;
+    gap: 15px;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #edf0f5;
+    min-width: 650px;
+}
+
+.user-row:last-child {
+    border-bottom: none;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf3ff;
+    border-radius: 12px;
+}
+
+.user-info strong {
+    display: block;
+    font-size: 13px;
+}
+
+.user-info span {
+    display: block;
+    margin-top: 4px;
+    color: #8b95a7;
+    font-size: 11px;
+}
+
+.user-role {
+    color: #667085;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.active,
+.inactive {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 8px;
+    font-size: 10px;
+}
+
+.active {
+    background: #e9f8f0;
+    color: #1a9b62;
+}
+
+.inactive {
+    background: #fff0f0;
+    color: #d64545;
+}
+
+.user-row button {
+    border: none;
+    padding: 9px 12px;
+    border-radius: 9px;
+    background: #4776e6;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.user-row button:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+    padding: 35px 15px;
+    text-align: center;
+    color: #8b95a7;
+}
+
+.empty-state div {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.empty-state h3 {
+    margin: 0 0 5px;
+    color: #344054;
+    font-size: 16px;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 12px;
+}
+
+
+/* =========================
+   ADMIN MODAL
+========================= */
+
+.admin-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(25, 35, 55, 0.45);
+}
+
+.admin-modal {
+    width: 100%;
+    max-width: 420px;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.admin-modal h3 {
+    margin: 0 0 10px;
+    font-size: 19px;
+    color: #344054;
+}
+
+.admin-modal p {
+    margin: 0;
+    color: #667085;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.admin-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.admin-modal-actions button {
+    border: none;
+    padding: 10px 17px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.modal-cancel-btn {
+    background: #f1f3f7;
+    color: #667085;
+}
+
+.modal-confirm-btn {
+    background: #4776e6;
+    color: #ffffff;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 900px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .admin-content {
+        width: 92%;
+        padding-top: 25px;
+    }
+
+    .admin-header {
+        padding: 20px 4%;
+    }
+
+    .admin-header h1 {
+        font-size: 24px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ride-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .ride-filters {
+        flex-direction: column;
+    }
+
+    .ride-filters select {
+        width: 100%;
+    }
+
+    .recent-rides,
+    .ride-management,
+    .user-management {
+        padding: 18px;
+    }
+
+}
+
+/* =========================================
+   MANAGE RIDE FEES
+========================================= */
+
+.fees-management {
+    margin-top: 30px;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.fees-management .section-heading {
+    margin-bottom: 24px;
+}
+
+.fees-management .section-heading h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.fees-management .section-heading p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.fees-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.fee-card {
+    padding: 24px;
+    background: #f8faff;
+    border: 1px solid #e1e7f5;
+    border-radius: 16px;
+}
+
+.fee-card h3 {
+    margin: 0 0 22px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.fee-input {
+    margin-bottom: 18px;
+}
+
+.fee-input:last-child {
+    margin-bottom: 0;
+}
+
+.fee-input label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4b5563;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.fee-input input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #1f2937;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.fee-input input:focus {
+    border-color: #4776e6;
+    box-shadow: 0 0 0 3px rgba(71, 118, 230, 0.12);
+}
+
+.save-fees-btn {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #4776e6;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.save-fees-btn:hover {
+    transform: translateY(-1px);
+}
+
+.save-fees-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .fees-management {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .fees-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .fee-card {
+        padding: 20px;
+    }
+
+}
+
+/* =========================================
+   FEES EDIT MODE
+========================================= */
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.edit-fees-btn {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #eef2ff;
+    color: #4776e6;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.edit-fees-btn:hover {
+    transform: translateY(-1px);
+}
+
+.fee-input input:disabled {
+    background: #f3f4f6;
+    color: #6b7280;
+    cursor: not-allowed;
+    border-color: #e5e7eb;
+}
+
+.fees-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.fees-actions button {
+    flex: 1;
+}
+
+.cancel-fees-btn {
+    padding: 14px 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #4b5563;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cancel-fees-btn:hover {
+    background: #f9fafb;
+}
+
+@media (max-width: 700px) {
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .edit-fees-btn {
+        width: 100%;
+    }
+
+    .fees-actions {
+        flex-direction: column;
+    }
+
+}

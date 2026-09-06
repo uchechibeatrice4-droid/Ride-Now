@@ -1,429 +1,591 @@
+/* =========================
+   BASE
+========================= */
+
 .ride-history {
   min-height: 100vh;
-  background: #f5f7fb;
-  padding: 45px 6%;
-  font-family: 'Poppins', sans-serif;
-  box-sizing: border-box;
+  padding: 35px 6% 60px;
+  background: #f7f9ff;
+  color: #172033;
+  font-family: Arial, sans-serif;
 }
 
-/* PAGE TITLE */
+/* =========================
+   BACK BUTTON
+========================= */
 
-.ride-history>h1 {
-  margin: 0;
-  color: #101828;
-  font-size: 32px;
+.back-btn {
+  margin-bottom: 22px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 9px;
+  background: #edf3ff;
+  color: #4776e6;
+  font-size: 12px;
   font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
-.ride-history>p {
-  color: #667085;
-  margin-top: 8px;
+.back-btn:hover {
+  background: #e1eaff;
+  transform: translateX(-2px);
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.ride-history > h1 {
+  margin: 0 0 8px;
+  font-size: 31px;
+  letter-spacing: -0.7px;
+}
+
+.ride-history > p {
+  margin: 0 0 30px;
+  color: #8b95a7;
   font-size: 14px;
 }
 
-/* CURRENT RIDE */
+/* =========================
+   CURRENT RIDE
+========================= */
 
 .active-ride {
-  max-width: 1000px;
-  margin: 30px auto;
+  margin-bottom: 30px;
   background: white;
-  border-radius: 18px;
-  padding: 28px;
-  border: 1px solid #eaecf0;
-  box-shadow: 0 10px 28px rgba(16, 24, 40, 0.07);
+  border: 1px solid #e8ecf5;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(37, 50, 85, 0.05);
 }
 
 .active-header {
+  padding: 23px 26px;
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  gap: 15px;
+  gap: 20px;
+  border-bottom: 1px solid #edf0f5;
 }
 
 .active-label {
-  color: #155eef;
+  color: #4776e6;
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
 }
 
 .active-header h2 {
   margin: 7px 0 0;
-  color: #101828;
+  color: #172033;
   font-size: 20px;
+  line-height: 1.4;
 }
 
 .status-badge {
-  background: #e8f0ff;
-  color: #155eef;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 8px 13px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: #edf9f3;
+  color: #20a66a;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: capitalize;
 }
 
-/* PROGRESS */
+/* =========================
+   RIDE PROGRESS
+========================= */
 
 .ride-progress {
+  padding: 25px;
   display: flex;
-  align-items: flex-start;
-  margin: 35px 10px;
+  align-items: center;
+  background: #fcfcff;
+  border-bottom: 1px solid #edf0f5;
 }
 
 .progress-step {
+  min-width: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #b3bac7;
   text-align: center;
-  min-width: 75px;
 }
 
 .progress-step span {
-  width: 32px;
-  height: 32px;
-  margin: auto;
+  width: 29px;
+  height: 29px;
+  margin-bottom: 7px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   border-radius: 50%;
-  background: #eaecf0;
-  color: #667085;
-  font-size: 13px;
-  font-weight: 600;
+  background: #f0f2f6;
+  font-size: 10px;
+  font-weight: 700;
 }
 
 .progress-step p {
-  margin: 8px 0 0;
-  color: #667085;
-  font-size: 11px;
+  margin: 0;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.progress-step.completed,
+.progress-step.current {
+  color: #4776e6;
 }
 
 .progress-step.completed span,
 .progress-step.current span {
-  background: #155eef;
+  background: #4776e6;
   color: white;
-}
-
-.progress-step.completed p,
-.progress-step.current p {
-  color: #155eef;
-  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(71, 118, 230, 0.22);
 }
 
 .progress-line {
+  height: 2px;
   flex: 1;
-  height: 3px;
-  background: #eaecf0;
-  margin-top: 15px;
+  min-width: 25px;
+  background: #e8ebf1;
 }
 
-.completed-line {
-  background: #155eef;
+.progress-line.completed-line {
+  background: #4776e6;
 }
 
-/* RIDE INFO */
+/* =========================
+   CURRENT RIDE INFO
+========================= */
 
 .ride-info {
+  padding: 20px 26px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  padding-top: 20px;
-  border-top: 1px solid #eaecf0;
+  grid-template-columns: 1.5fr 1.5fr 1fr;
+  gap: 20px;
+  background: #fafbfe;
 }
 
-.ride-info div {
-  background: #f8faff;
-  padding: 15px;
-  border-radius: 10px;
+.ride-info > div {
+  padding-left: 20px;
+  border-left: 1px solid #e6eaf1;
+}
+
+.ride-info > div:first-child {
+  padding-left: 0;
+  border-left: none;
 }
 
 .ride-info span {
   display: block;
-  color: #667085;
+  margin-bottom: 6px;
+  color: #9aa3b3;
   font-size: 11px;
-  margin-bottom: 5px;
 }
 
 .ride-info strong {
-  color: #101828;
+  color: #344054;
   font-size: 14px;
+  line-height: 1.5;
 }
 
-/* NO ACTIVE RIDE */
+/* =========================
+   NO ACTIVE RIDE
+========================= */
 
 .no-active-ride {
-  max-width: 600px;
-  margin: 35px auto;
+  margin-bottom: 30px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
   background: white;
-  padding: 45px 25px;
-  text-align: center;
-  border-radius: 18px;
-  border: 1px solid #eaecf0;
-  box-shadow: 0 8px 25px rgba(16, 24, 40, 0.05);
+  border: 1px solid #e8ecf5;
+  border-radius: 20px;
+  box-shadow: 0 7px 22px rgba(37, 50, 85, 0.04);
 }
 
-.no-active-ride div {
-  font-size: 50px;
+.no-active-ride > div {
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #edf3ff;
+  border-radius: 15px;
+  font-size: 24px;
 }
 
 .no-active-ride h2 {
-  color: #101828;
-  margin-bottom: 8px;
+  margin: 0 0 4px;
+  font-size: 19px;
 }
 
 .no-active-ride p {
-  color: #667085;
-  font-size: 14px;
+  margin: 0;
+  color: #8b95a7;
+  font-size: 13px;
 }
 
 .no-active-ride button {
-  margin-top: 15px;
-  padding: 12px 22px;
+  margin-left: auto;
+  padding: 11px 17px;
   border: none;
   border-radius: 9px;
-  background: #155eef;
+  background: #4776e6;
   color: white;
-  font-family: inherit;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
 }
 
-/* HISTORY */
+/* =========================
+   HISTORY SECTION
+========================= */
 
 .history-section {
-  max-width: 1000px;
-  margin: 45px auto;
+  margin-top: 8px;
 }
 
-.history-section>h2 {
-  color: #101828;
-  font-size: 23px;
-  margin-bottom: 20px;
+.history-section > h2 {
+  margin: 0 0 17px;
+  font-size: 22px;
 }
+
+/* =========================
+   RIDE CARD
+========================= */
 
 .ride-card {
+  margin-bottom: 15px;
+  padding: 22px 24px;
   background: white;
-  padding: 24px;
-  margin-bottom: 17px;
-  border-radius: 16px;
-  border: 1px solid #eaecf0;
-  box-shadow: 0 6px 20px rgba(16, 24, 40, 0.05);
+  border: 1px solid #e8ecf5;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(37, 50, 85, 0.04);
   transition: 0.2s ease;
 }
 
 .ride-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(16, 24, 40, 0.08);
+  box-shadow: 0 10px 25px rgba(37, 50, 85, 0.07);
 }
 
 .ride-card-header {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  gap: 15px;
+  gap: 20px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #eaecf0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #edf0f5;
 }
 
 .ride-card-header h3 {
   margin: 0;
-  color: #101828;
-  font-size: 16px;
+  color: #344054;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 .status {
-  padding: 6px 11px;
+  padding: 6px 10px;
+  flex-shrink: 0;
   border-radius: 20px;
-  background: #eef4ff;
-  color: #155eef;
-  font-size: 11px;
-  font-weight: 600;
+  background: #edf3ff;
+  color: #4776e6;
+  font-size: 10px;
+  font-weight: 700;
   text-transform: capitalize;
 }
 
-.ride-card>p {
-  color: #667085;
+/* =========================
+   RIDE DETAILS
+========================= */
+
+.ride-card > p {
+  margin: 10px 0;
+  color: #7d8798;
   font-size: 13px;
-  margin: 12px 0;
 }
 
-.ride-card>p strong {
-  color: #344054;
+.ride-card > p strong {
+  color: #667085;
+  font-size: 13px;
 }
 
 .paid {
-  color: #12b76a;
+  color: #20a66a;
   font-weight: 700;
+  text-transform: capitalize;
 }
 
 .unpaid {
-  color: #f79009;
+  color: #e59a3a;
   font-weight: 700;
+  text-transform: capitalize;
 }
 
-/* PAYMENT */
+/* =========================
+   PAYMENT
+========================= */
 
 .payment-action {
-  margin-top: 18px;
+  margin-top: 17px;
+  padding-top: 15px;
+  border-top: 1px solid #edf0f5;
 }
 
 .pay-btn {
-  width: 100%;
-  padding: 12px;
+  padding: 11px 18px;
   border: none;
   border-radius: 9px;
-  background: #155eef;
+  background: #4776e6;
   color: white;
-  font-family: inherit;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 5px 13px rgba(71, 118, 230, 0.18);
+  transition: 0.2s ease;
 }
 
 .pay-btn:hover {
-  background: #004eeb;
+  transform: translateY(-2px);
 }
 
 .paid-message {
   margin-top: 15px;
-  padding: 11px;
+  padding: 10px 13px;
+  width: fit-content;
   border-radius: 9px;
-  background: #ecfdf3;
-  color: #027a48;
-  text-align: center;
-  font-weight: 600;
-  font-size: 13px;
+  background: #edf9f3;
+  color: #20a66a;
+  font-size: 12px;
+  font-weight: 700;
 }
 
-/* RATING */
+/* =========================
+   RATING
+========================= */
 
 .rating-section {
   margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid #eaecf0;
+  padding: 18px;
+  background: #faf9ff;
+  border: 1px solid #eeeafb;
+  border-radius: 14px;
 }
 
 .rating-section p {
-  color: #344054;
-  font-size: 13px;
+  margin: 0 0 10px;
+  color: #667085;
+  font-size: 12px;
 }
 
 .rate-btn {
-  padding: 10px 17px;
+  padding: 10px 15px;
   border: none;
-  border-radius: 8px;
-  background: #155eef;
-  color: white;
-  font-family: inherit;
-  font-weight: 600;
+  border-radius: 9px;
+  background: #f3efff;
+  color: #7357c8;
+  font-size: 11px;
+  font-weight: 700;
   cursor: pointer;
+}
+
+.rate-btn:hover {
+  background: #eae3ff;
+}
+
+.rating-form {
+  margin-top: 5px;
 }
 
 .stars {
   display: flex;
   gap: 5px;
-  margin: 12px 0;
+  margin-bottom: 12px;
 }
 
 .stars button {
+  padding: 3px;
   border: none;
   background: transparent;
-  font-size: 25px;
+  font-size: 22px;
+  filter: grayscale(1);
+  opacity: 0.4;
   cursor: pointer;
-  opacity: 0.35;
 }
 
 .stars button.selected {
+  filter: grayscale(0);
   opacity: 1;
 }
 
 .rating-form textarea {
   width: 100%;
-  max-width: 600px;
   box-sizing: border-box;
-  padding: 11px;
-  border: 1px solid #d0d5dd;
-  border-radius: 8px;
-  font-family: inherit;
+  padding: 12px;
   resize: vertical;
+  border: 1px solid #e1e5ee;
+  border-radius: 10px;
   outline: none;
+  background: white;
+  color: #344054;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
 }
 
 .rating-form textarea:focus {
-  border-color: #155eef;
+  border-color: #9eb8f5;
+  box-shadow: 0 0 0 3px #edf3ff;
 }
 
 .rating-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 12px;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.submit-rating,
+.cancel-rating {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .submit-rating {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #155eef;
+  background: #4776e6;
   color: white;
-  font-family: inherit;
-  font-weight: 600;
-  cursor: pointer;
 }
 
 .cancel-rating {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #eaecf0;
-  color: #344054;
-  font-family: inherit;
-  cursor: pointer;
+  background: #f0f2f6;
+  color: #667085;
 }
 
 .already-rated {
-  padding: 12px;
-  border-radius: 8px;
-  background: #fffaeb;
-  color: #b54708;
-  font-size: 13px;
+  color: #7357c8;
+  font-size: 12px;
   font-weight: 600;
 }
 
+/* =========================
+   EMPTY HISTORY
+========================= */
+
 .no-rides {
+  padding: 35px 20px !important;
   text-align: center;
-  color: #667085;
-  padding: 30px;
+  background: white;
+  border: 1px dashed #dce2ef;
+  border-radius: 16px;
+  color: #9aa3b3 !important;
+  font-size: 13px !important;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 700px) {
 
   .ride-history {
-    padding: 30px 18px;
+    padding: 25px 15px 45px;
   }
 
-  .ride-history>h1 {
+  .ride-history > h1 {
     font-size: 27px;
   }
 
-  .active-header,
-  .ride-card-header {
-    align-items: flex-start;
+  .ride-history > p {
+    font-size: 13px;
+  }
+
+  .active-header {
+    padding: 20px;
     flex-direction: column;
   }
 
+  .active-header h2 {
+    font-size: 18px;
+  }
+
+  .status-badge {
+    align-self: flex-start;
+  }
+
   .ride-progress {
-    margin-left: 0;
-    margin-right: 0;
+    padding: 20px 8px;
+    overflow-x: auto;
   }
 
   .progress-step {
-    min-width: 50px;
+    min-width: 58px;
   }
 
-  .progress-step p {
-    font-size: 9px;
+  .progress-line {
+    min-width: 18px;
   }
 
   .ride-info {
+    padding: 18px;
     grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .ride-info > div {
+    padding-left: 0;
+    padding-bottom: 12px;
+    border-left: none;
+    border-bottom: 1px solid #e6eaf1;
+  }
+
+  .ride-info > div:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .ride-info strong {
+    font-size: 13px;
+  }
+
+  .no-active-ride {
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+
+  .no-active-ride button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .ride-card {
+    padding: 18px;
+  }
+
+  .ride-card-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ride-card-header h3 {
+    font-size: 14px;
+  }
+
+  .status {
+    align-self: flex-start;
+  }
+
+  .ride-card > p {
+    font-size: 12px;
   }
 }

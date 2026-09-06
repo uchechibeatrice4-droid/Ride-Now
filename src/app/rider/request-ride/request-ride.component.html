@@ -1,72 +1,172 @@
-<div class="request-page">
+<div class="request-page" (click)="closeSuggestions()">
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header class="request-header">
-    <button class="back-btn" routerLink="/rider-dashboard">
+
+    <button class="back-btn" routerLink="/rider-dashboard" (click)="$event.stopPropagation()">
       ← Back
     </button>
 
     <h1>RideNow</h1>
 
-    <span class="header-title">Request a Ride</span>
+    <span class="header-title">
+      Request a Ride
+    </span>
+
   </header>
 
-  <!-- Main Content -->
+
   <main class="request-container">
 
     <!-- MAP -->
     <section class="map-section">
 
       <div class="map-heading">
+
         <div>
           <h3>📍 Choose your route</h3>
-          <p>Select your pickup and destination on the map.</p>
+
+          <p>
+            Enter your pickup and destination below.
+          </p>
         </div>
+
       </div>
 
       <div id="ride-map"></div>
 
     </section>
 
+
+    <!-- INTRO -->
     <div class="request-intro">
-      <span class="location-icon">📍</span>
+
+      <span class="location-icon">
+        📍
+      </span>
 
       <div>
-        <h2>Where are you going?</h2>
-        <p>Enter your pickup location and destination.</p>
+
+        <h2>
+          Where are you going?
+        </h2>
+
+        <p>
+          Enter your pickup location and destination.
+        </p>
+
       </div>
+
     </div>
 
+
+    <!-- FORM -->
     <form [formGroup]="rideForm" (ngSubmit)="requestRide()">
 
-      <!-- Locations -->
+      <!-- LOCATIONS -->
       <section class="location-section">
 
+        <!-- PICKUP -->
         <div class="location-input">
-          <div class="icon pickup-icon">●</div>
 
-          <div class="input-content">
-            <label>Pickup Location</label>
-
-            <input type="text" formControlName="pickup" placeholder="Where should we pick you up?">
+          <div class="icon pickup-icon">
+            ●
           </div>
+
+          <div class="input-content" (click)="$event.stopPropagation()">
+
+            <label>
+              Pickup Location
+            </label>
+
+            <input type="text" formControlName="pickup" placeholder="Where should we pick you up?" autocomplete="off"
+              (input)="searchPickupSuggestions()" (focus)="searchPickupSuggestions()">
+
+
+            <!-- PICKUP SUGGESTIONS -->
+            <div class="suggestions" *ngIf="showPickupSuggestions">
+
+              <div class="suggestion" *ngFor="let suggestion of pickupSuggestions"
+                (click)="selectPickupSuggestion(suggestion)">
+
+                <span class="suggestion-icon">
+                  📍
+                </span>
+
+                <div class="suggestion-text">
+
+                  <strong>
+                    {{ suggestion.cleanName }}
+                  </strong>
+
+                  <small *ngIf="suggestion.category">
+                    {{ suggestion.category }}
+                  </small>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
+
+        <!-- LINE -->
         <div class="location-line"></div>
 
+
+        <!-- DESTINATION -->
         <div class="location-input">
-          <div class="icon destination-icon">●</div>
 
-          <div class="input-content">
-            <label>Destination</label>
-
-            <input type="text" formControlName="destination" placeholder="Where are you going?">
+          <div class="icon destination-icon">
+            ●
           </div>
+
+          <div class="input-content" (click)="$event.stopPropagation()">
+
+            <label>
+              Destination
+            </label>
+
+            <input type="text" formControlName="destination" placeholder="Where are you going?" autocomplete="off"
+              (input)="searchDestinationSuggestions()" (focus)="searchDestinationSuggestions()">
+
+
+            <!-- DESTINATION SUGGESTIONS -->
+            <div class="suggestions" *ngIf="showDestinationSuggestions">
+
+              <div class="suggestion" *ngFor="let suggestion of destinationSuggestions"
+                (click)="selectDestinationSuggestion(suggestion)">
+
+                <span class="suggestion-icon">
+                  📍
+                </span>
+
+                <div class="suggestion-text">
+
+                  <strong>
+                    {{ suggestion.cleanName }}
+                  </strong>
+
+                  <small *ngIf="suggestion.category">
+                    {{ suggestion.category }}
+                  </small>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
       </section>
 
-      <!-- Ride Type -->
       <section class="ride-type-section">
 
         <h3>Choose your ride</h3>
@@ -74,29 +174,40 @@
         <div class="ride-options">
 
           <label class="ride-option">
+
             <input type="radio" formControlName="rideType" value="Standard">
 
             <div class="ride-option-content">
-              <div class="ride-icon">🚗</div>
+
+              <div class="ride-icon">
+                🚕
+              </div>
 
               <div>
                 <strong>Standard</strong>
                 <p>Affordable everyday ride</p>
               </div>
+
             </div>
 
           </label>
 
+
           <label class="ride-option">
+
             <input type="radio" formControlName="rideType" value="Premium">
 
             <div class="ride-option-content">
-              <div class="ride-icon">🚘</div>
+
+              <div class="ride-icon">
+                🚘
+              </div>
 
               <div>
                 <strong>Premium</strong>
                 <p>More comfort, more space</p>
               </div>
+
             </div>
 
           </label>
@@ -105,76 +216,264 @@
 
       </section>
 
-      <button type="button" class="calculate-btn" (click)="calculateRoute()"
-        [disabled]="rideForm.get('pickup')?.invalid || rideForm.get('destination')?.invalid || loadingRoute">
 
-        {{ loadingRoute ? 'Calculating route...' : 'Get Fare Estimate 📍' }}
+      <!-- CALCULATE FARE -->
+      <button type="button" class="calculate-btn" (click)="calculateRoute()" [disabled]="
+          rideForm.get('pickup')?.invalid ||
+          rideForm.get('destination')?.invalid ||
+          loadingRoute
+        ">
+
+        {{
+        loadingRoute
+        ? 'Calculating route...'
+        : 'Get Fare Estimate 📍'
+        }}
 
       </button>
 
-      <!-- Summary -->
+
+      <!-- SUMMARY -->
       <section class="ride-summary">
 
         <div>
-          <span>Distance</span>
+
+          <span>
+            Distance
+          </span>
+
           <strong>
-            {{ distanceKm > 0 ? (distanceKm | number:'1.1-1') + ' km' : '--' }}
+            {{
+            distanceKm > 0
+            ? (distanceKm | number:'1.1-1') + ' km'
+            : '--'
+            }}
           </strong>
+
         </div>
 
-        <div>
-          <span>Ride type</span>
-          <strong>{{ rideForm.value.rideType }}</strong>
-        </div>
 
         <div>
-          <span>Estimated fare</span>
+
+          <span>
+            Ride type
+          </span>
+
           <strong>
-            {{ estimatedFare > 0 ? ('₦' + estimatedFare) : '--' }}
+            {{ rideForm.value.rideType }}
           </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Estimated fare
+          </span>
+
+          <strong>
+            {{
+            estimatedFare > 0
+            ? ('₦' + estimatedFare)
+            : '--'
+            }}
+          </strong>
+
         </div>
 
       </section>
 
+
+      <!-- ================================
+     PAYMENT METHOD
+================================ -->
+
       <section class="payment-section">
 
         <h3>Choose payment method</h3>
+
         <p>Payment will be completed after your ride.</p>
 
         <div class="payment-options">
 
+          <!-- CASH -->
+
           <label class="payment-option">
+
             <input type="radio" formControlName="paymentMethod" value="cash">
 
             <div class="payment-option-content">
-              <div class="payment-icon">💵</div>
+
+              <div class="payment-icon">
+                💵
+              </div>
 
               <div>
                 <strong>Cash</strong>
                 <span>Pay the driver after your ride</span>
               </div>
+
             </div>
+
           </label>
 
+
+          <!-- CARD -->
+
           <label class="payment-option">
+
             <input type="radio" formControlName="paymentMethod" value="card">
 
             <div class="payment-option-content">
-              <div class="payment-icon">💳</div>
+
+              <div class="payment-icon">
+                💳
+              </div>
 
               <div>
                 <strong>Card</strong>
                 <span>Pay securely after your ride</span>
               </div>
+
             </div>
+
           </label>
 
         </div>
 
       </section>
 
-      <!-- Submit -->
-      <button type="submit" class="request-btn" [disabled]="rideForm.invalid">
+      <!-- ================================
+     COMPLETED RIDE PAYMENT
+================================ -->
+
+      <section class="payment-after-ride" *ngIf="completedUnpaidRide">
+
+        <div class="payment-header">
+
+          <h3>💳 Complete Your Payment</h3>
+
+          <p>
+            Your ride has been completed.
+            Please complete your payment.
+          </p>
+
+        </div>
+
+
+        <!-- FARE -->
+
+        <div class="payment-fare">
+
+          <span>Ride Fare</span>
+
+          <strong>
+            ₦{{ completedUnpaidRide.fare | number }}
+          </strong>
+
+        </div>
+
+
+        <!-- CURRENT PAYMENT METHOD -->
+
+        <div class="current-payment-method">
+
+          <span>Payment Method</span>
+
+          <strong *ngIf="
+      completedUnpaidRide.paymentMethod === 'card'
+    ">
+            💳 Card
+          </strong>
+
+          <strong *ngIf="
+      completedUnpaidRide.paymentMethod === 'cash'
+    ">
+            💵 Cash
+          </strong>
+
+        </div>
+
+
+        <!-- CARD PAYMENT -->
+
+        <div class="card-payment" *ngIf="
+      completedUnpaidRide.paymentMethod === 'card'
+    ">
+
+          <h4>Card Payment</h4>
+
+          <p>
+            Enter your card details to complete payment.
+          </p>
+
+          <input type="text" placeholder="Card Number" maxlength="19" [(ngModel)]="cardNumber"
+            [ngModelOptions]="{standalone: true}">
+
+          <input type="text" placeholder="Card Holder Name" [(ngModel)]="cardHolderName"
+            [ngModelOptions]="{standalone: true}">
+
+          <div class="card-row">
+
+            <input type="text" placeholder="MM/YY" maxlength="5" [(ngModel)]="cardExpiry"
+              [ngModelOptions]="{standalone: true}">
+
+            <input type="password" placeholder="CVV" maxlength="4" [(ngModel)]="cardCvv"
+              [ngModelOptions]="{standalone: true}">
+
+          </div>
+
+
+          <button type="button" class="pay-btn" (click)="payWithCard()" [disabled]="paymentLoading">
+            {{
+            paymentLoading
+            ? 'Processing Payment...'
+            : '💳 Pay ₦' + (completedUnpaidRide.fare | number)
+            }}
+          </button>
+
+
+          <button type="button" class="change-payment-btn" (click)="changePaymentMethod()">
+            🔄 Change to Cash
+          </button>
+
+        </div>
+
+
+        <!-- CASH PAYMENT -->
+
+        <div class="cash-payment" *ngIf="
+      completedUnpaidRide.paymentMethod === 'cash'
+    ">
+
+          <h4>💵 Cash Payment</h4>
+
+          <p>
+            Give ₦{{ completedUnpaidRide.fare | number }}
+            to the driver.
+          </p>
+
+          <button type="button" class="cash-paid-btn" (click)="confirmCashPayment()">
+            ✅ I've Paid Cash
+          </button>
+
+
+          <button type="button" class="change-payment-btn" (click)="changePaymentMethod()">
+            🔄 Change to Card
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- REQUEST -->
+      <button type="submit" class="request-btn" [disabled]="
+    rideForm.invalid ||
+    !routeCalculated ||
+    loadingRoute
+  ">
         Request Ride 🚗
       </button>
 
@@ -184,6 +483,8 @@
 
 </div>
 
+
+<!-- CUSTOM MODAL -->
 <app-modal [show]="modalVisible" [title]="modalTitle" [message]="modalMessage" [type]="modalType" (close)="closeModal()"
   (confirm)="confirmAction()">
 </app-modal>
