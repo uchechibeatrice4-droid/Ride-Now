@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -88,7 +89,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private firestore: AngularFirestore,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private router: Router
   ) { }
 
 
@@ -604,7 +606,7 @@ export class DashboardComponent implements OnInit {
           this.modalVisible = false;
           this.pendingAction = null;
 
-          window.location.href = `${window.location.origin}${window.location.pathname.includes('/Ride-Now') ? '/Ride-Now/login' : '/login'}`;
+          this.router.navigate(['/login']);
 
         })
         .catch(error => {
@@ -744,8 +746,7 @@ export class DashboardComponent implements OnInit {
 
         this.modalVisible = false;
 
-        window.location.href =
-          `${window.location.origin}${window.location.pathname.includes('/Ride-Now') ? '/Ride-Now/login' : '/login'}`;
+        this.router.navigate(['/login']);
 
       })
       .catch(error => {
