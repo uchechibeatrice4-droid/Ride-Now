@@ -2265,7 +2265,6 @@ export class RequestRideComponent
             'success'
 
           );
-
         })
 
         .catch(error => {

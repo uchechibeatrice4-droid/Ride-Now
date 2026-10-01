@@ -15,7 +15,7 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent },
   { path: 'rider-dashboard', component: RiderDashboardComponent, canActivate: [RoleGuard], data: { role: 'rider' } },
   { path: 'profile', component: ProfileComponent, canActivate: [RoleGuard], data: { role: 'rider' } },
   { path: 'request-ride', component: RequestRideComponent, canActivate: [RoleGuard], data: { role: 'rider' } },
