@@ -604,7 +604,7 @@ export class DashboardComponent implements OnInit {
           this.modalVisible = false;
           this.pendingAction = null;
 
-          window.location.href = '/login';
+          window.location.href = `${window.location.origin}${window.location.pathname.includes('/Ride-Now') ? '/Ride-Now/login' : '/login'}`;
 
         })
         .catch(error => {
@@ -745,7 +745,7 @@ export class DashboardComponent implements OnInit {
         this.modalVisible = false;
 
         window.location.href =
-          '/login';
+          `${window.location.origin}${window.location.pathname.includes('/Ride-Now') ? '/Ride-Now/login' : '/login'}`;
 
       })
       .catch(error => {
